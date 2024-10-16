@@ -1,0 +1,15 @@
+<resources>
+    <!-- Colors for Light Mode -->
+    <color name="colorPrimary">#6A4C93</color> <!-- Dark Purple -->
+    <color name="colorPrimaryVariant">#3F2A6F</color> <!-- Darker Purple -->
+    <color name="colorOnPrimary">#FFFFFF</color> <!-- White -->
+    <color name="colorBackground">#FFFFFF</color> <!-- White Background -->
+    <color name="colorOnBackground">#000000</color> <!-- Black Text -->
+
+    <!-- Colors for Dark Mode -->
+    <color name="colorPrimaryDark">#4A3A70</color> <!-- Dark Purple -->
+    <color name="colorOnPrimaryDark">#FFFFFF</color> <!-- White -->
+    <color name="colorBackgroundDark">#2C2C2C</color> <!-- Dark Background -->
+    <color name="colorOnBackgroundDark">#FFFFFF</color> <!-- White Text -->
+    <color name="colorAccent">#FF7F50</color> <!-- Coral Accent -->
+</resources>

@@ -1,0 +1,17 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/loading_dar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToOutline="true"
+    android:background="#4D426D">
+
+    <!-- ImageView for the logo -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="244dp"
+        android:layout_height="328dp"
+        android:src="@drawable/ic_chat_logo"
+        android:layout_centerInParent="true"
+        android:contentDescription="ic_chat_logo" />
+</RelativeLayout>

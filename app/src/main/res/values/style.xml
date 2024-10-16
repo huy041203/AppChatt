@@ -1,0 +1,7 @@
+<resources>
+    <!-- Light Theme -->
+    <style name="AppTheme" parent="Theme.MyApp"/>
+
+    <!-- Dark Theme -->
+    <style name="AppTheme.Dark" parent="Theme.MyApp.Dark"/>
+</resources>

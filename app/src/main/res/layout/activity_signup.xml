@@ -1,0 +1,129 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4D426D">
+
+    <!-- Content View -->
+    <View
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="570dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="242dp"
+        android:background="@drawable/base" />
+
+    <!-- LinearLayout inside RelativeLayout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp"
+        android:background="?attr/colorBackground"
+        android:layout_centerInParent="true">
+
+        <!-- Logo -->
+
+        <!-- Title -->
+
+        <ImageView
+            android:id="@+id/logoImageView"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="40dp"
+            android:contentDescription="App Logo"
+            android:src="@drawable/ic_chat_logo" />
+
+        <TextView
+            android:id="@+id/signUpTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create a New Account"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp" />
+
+        <EditText
+            android:id="@+id/usernameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableEnd="@drawable/ic_user"
+            android:hint="Username"
+            android:inputType="text"
+            android:textColor="#1E1E1E"
+            android:textSize="16sp"
+            android:background="@android:color/white"
+            android:paddingStart="10dp"
+        />
+
+
+        <EditText
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableEnd="@drawable/ic_email"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:textColor="#1E1E1E"
+            android:textSize="16sp"
+            android:background="@android:color/white"
+            android:paddingStart="10dp"
+            />
+
+        <!-- Password Field -->
+        <EditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableEnd="@drawable/ic_password"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textColor="#1E1E1E"
+            android:textSize="16sp"
+            android:background="@android:color/white"
+            android:paddingStart="10dp"
+            />
+
+        <!-- Confirm Password Field -->
+        <EditText
+            android:id="@+id/confirmPasswordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableEnd="@drawable/ic_password"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:textColor="#1E1E1E"
+            android:textSize="16sp"
+            android:background="@android:color/white"
+            android:paddingStart="10dp"
+            />
+
+        <!-- Sign Up Button -->
+        <Button
+            android:id="@+id/signUpButton"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="?attr/colorPrimary"
+            android:text="Sign Up"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <!-- Sign In Link -->
+        <TextView
+            android:id="@+id/signInLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already have an account? Sign In"
+            android:textColor="#1E1E1E"
+            android:layout_marginTop="8dp"
+            android:textSize="14sp" />
+    </LinearLayout>
+</RelativeLayout>
