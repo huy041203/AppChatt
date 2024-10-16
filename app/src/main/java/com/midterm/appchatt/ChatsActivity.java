@@ -29,7 +29,6 @@ public class ChatsActivity extends AppCompatActivity {
         fabNewChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Open NewChatActivity to start a new chat
                 Intent intent = new Intent(ChatsActivity.this, NewChatActivity.class);
                 startActivity(intent);
             }

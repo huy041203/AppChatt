@@ -5,7 +5,6 @@ public class User {
     private String email;
     private String profile_picture;
 
-    // Constructor, getters and setters
     public User() {}  // Default constructor
 
     public User(String username, String email, String profile_picture) {

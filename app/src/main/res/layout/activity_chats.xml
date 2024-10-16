@@ -32,5 +32,5 @@
         android:layout_margin="16dp"
         android:src="@drawable/ic_add_chat"
         android:contentDescription="New Chat"
-        android:backgroundTint="?attr/colorAccent" />
+        android:backgroundTint="@color/colorPrimary" />
 </LinearLayout>
