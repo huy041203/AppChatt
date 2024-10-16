@@ -5,19 +5,17 @@
     android:layout_height="wrap_content"
     android:backgroundTint="@color/lighter_background"
     >
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <LinearLayout
         android:id="@+id/navbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/navbar_bg"
-        app:labelVisibilityMode="unlabeled"
-        app:itemIconTint="@null"
         >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="59sp"
-            android:layout_marginTop="25sp"
+            android:layout_marginTop="20sp"
             >
             <ImageView
                 android:id="@+id/message_icon"
@@ -27,6 +25,7 @@
                 android:src="@drawable/message"
                 />
             <ImageView
+                android:id="@+id/contact_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -34,12 +33,13 @@
                 android:src="@drawable/contact_list"
                 />
             <ImageView
+                android:id='@+id/settings_icon'
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/settings"
                 />
         </RelativeLayout>
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+    </LinearLayout>
 
 </RelativeLayout>

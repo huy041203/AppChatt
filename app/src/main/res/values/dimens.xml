@@ -3,6 +3,6 @@
     <dimen name="title_margin_top">47dp</dimen>
     <dimen name="title_margin_left">31dp</dimen>
     <dimen name="content_margin_top">83dp</dimen>
-    <dimen name="list_margin_top_from_content">20dp</dimen>
+    <dimen name="list_margin_top_from_content">35dp</dimen>
     <dimen name="list_margin_left_from_content">5dp</dimen>
 </resources>
