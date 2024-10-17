@@ -22,10 +22,5 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        Intent intent = new Intent(MainActivity.this, MainContact.class);
-        startActivity(intent);
-
-        finish();
-
     }
 }
