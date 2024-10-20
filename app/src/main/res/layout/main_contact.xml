@@ -27,8 +27,8 @@
             android:layout_alignTop="@id/search_bar"
             android:layout_alignEnd="@id/search_bar"
             android:src="@drawable/search"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="5dp"
             />
     </RelativeLayout>
 
