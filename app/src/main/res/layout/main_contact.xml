@@ -41,7 +41,6 @@
             android:id="@+id/rvList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/list_margin_top_from_content"
             android:layout_marginStart="@dimen/list_margin_left_from_content"
             />
 
