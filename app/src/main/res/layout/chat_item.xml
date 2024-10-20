@@ -10,6 +10,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/firstElementMargin"
+            android:layout_marginTop="@dimen/list_margin_top_from_content"
+            android:visibility="gone"
+            />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,6 +1,8 @@
 package com.midterm.appchatt;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -48,6 +50,40 @@ public class MainMessage extends AppCompatActivity {
                 "Đã xong deadline chưa em?", "Yesterday"));
         chatList.add(new Chat("", "Mommy",
                 "Ngủ đi", "24/09/2023"));
+
+
+
+        //Search bar configuration.
+        binding.searchBar.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() == 0) {
+                    adapter.finalizeFilteringAction();
+                }
+
+                List<Chat> filteredList = new ArrayList<>();
+                adapter.notifyThereIsAFilteringAction(filteredList);
+                for (Chat contact : chatList) {
+                    if (contact.getDisplayName().toLowerCase()
+                            .contains(charSequence.toString().toLowerCase())) {
+                        filteredList.add(contact);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
 
     }
 }
