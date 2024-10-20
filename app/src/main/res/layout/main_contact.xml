@@ -8,13 +8,29 @@
     android:background="@color/background"
     tools:context=".MainContact">
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/contact_layout_title"
-        android:layout_marginTop="@dimen/title_margin_top"
-        android:layout_marginStart="@dimen/title_margin_left"
-        />
+        android:layout_marginTop="@dimen/search_bar_margin_top"
+        android:layout_marginHorizontal="@dimen/search_bar_margin_horizontal"
+        >
+        <EditText
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/search_bar_height"
+            android:background="@drawable/search_bar"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/search_bar"
+            android:layout_alignEnd="@id/search_bar"
+            android:src="@drawable/search"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="4dp"
+            />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

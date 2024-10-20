@@ -1,6 +1,10 @@
 package com.midterm.appchatt;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +46,38 @@ public class MainContact extends AppCompatActivity {
         contactList.add(new Contact("", "Nhat Nguyen"));
         contactList.add(new Contact("", "Ngoc Huy"));
         contactList.add(new Contact("", "Mommy"));
+
+
+        //Search bar configuration.
+        binding.searchBar.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() == 0) {
+                    adapter.finalizeFilteringAction();
+                }
+
+                List<Contact> filteredList = new ArrayList<>();
+                adapter.notifyThereIsAFilteringAction(filteredList);
+                for (Contact contact : contactList) {
+                    if (contact.getDisplayName().toLowerCase()
+                            .contains(charSequence.toString().toLowerCase())) {
+                        filteredList.add(contact);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
     }
 }

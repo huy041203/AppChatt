@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="title_margin_top">47dp</dimen>
-    <dimen name="title_margin_left">31dp</dimen>
+    <dimen name="search_bar_margin_top">27dp</dimen>
+    <dimen name="search_bar_margin_horizontal">31dp</dimen>
+    <dimen name="search_bar_height">32dp</dimen>
     <dimen name="content_margin_top">83dp</dimen>
     <dimen name="list_margin_top_from_content">57dp</dimen>
     <dimen name="list_margin_left_from_content">5dp</dimen>

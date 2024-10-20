@@ -51,7 +51,7 @@
             android:id="@+id/chat_separator"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:background="@color/separator"
+            android:foreground="@color/separator"
             android:layout_marginTop="11dp" />
     </LinearLayout>
 

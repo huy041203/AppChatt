@@ -15,6 +15,7 @@ import java.util.List;
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ChatViewHolder> {
 
     private List<Contact> contactList;
+    private List<Contact> backupContactList;
 
     public ContactAdapter(List<Contact> contactList) {
         this.contactList = contactList;
@@ -31,7 +32,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ChatView
         Contact chat = contactList.get(position);
         holder.bind(chat);
         if (position + 1 == this.getItemCount()) {
-            holder.hideSeparator();
+            // If binding the last item, it will hide the separator for better
+            //          performance.
+            holder.toggleBottomSeparator(false);
+        } else {
+            // With other items, the separator is needed for sure.
+            holder.toggleBottomSeparator(true);
         }
         if (position == 0) {
             holder.showMarginTopForFirstItem();
@@ -43,6 +49,17 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ChatView
         return contactList.size();
     }
 
+    // The adapter will temporarily carry a new contact list and backup the old one.
+    public void notifyThereIsAFilteringAction(List<Contact> tempContactList) {
+        this.backupContactList = this.contactList;
+        this.contactList = tempContactList;
+    }
+
+    public void finalizeFilteringAction() {
+        if (this.backupContactList != null) {
+            this.contactList = backupContactList;
+        }
+    }
 
     public static class ChatViewHolder extends RecyclerView.ViewHolder {
         private ContactItemBinding binding;
@@ -66,8 +83,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ChatView
             this.binding.firstElementMargin.setVisibility(View.VISIBLE);
         }
 
-        public void hideSeparator() {
-            this.binding.chatSeparator.setVisibility(ViewGroup.GONE);
+        public void toggleBottomSeparator(boolean foo) {
+            this.binding.chatSeparator.setVisibility(foo ? View.VISIBLE : View.GONE);
         }
     }
 }
