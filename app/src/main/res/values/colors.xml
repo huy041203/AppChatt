@@ -1,4 +1,6 @@
 <resources>
+    <color name="white">#FFFFFF</color>
+
     <!-- Colors for Light Mode -->
     <color name="colorPrimary">#6A4C93</color> <!-- Dark Purple -->
     <color name="colorPrimaryVariant">#3F2A6F</color> <!-- Darker Purple -->
