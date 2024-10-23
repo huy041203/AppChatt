@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_background">
@@ -10,62 +11,103 @@
         android:gravity="center"
         android:padding="16dp"
         android:orientation="vertical">
-        <Spinner
-            android:id="@+id/spinner_country"
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:src="@drawable/icon_account_circle" />
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"/>
-
-        <EditText
-            android:id="@+id/editTextPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Số điện thoại"
-            android:inputType="phone"
-            android:layout_marginTop="20dp"/>
-
-        <EditText
-            android:id="@+id/editTextPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Mời nhập mật khẩu"
-            android:inputType="textPassword"
-            android:layout_marginTop="20dp"/>
-        <EditText
-            android:id="@+id/editTextPassword1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Mời nhập lại mật khẩu"
-            android:inputType="textPassword"
-            android:layout_marginTop="20dp"/>
-        <EditText
-            android:id="@+id/editTextPassword2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nhập mã OTP"
-            android:inputType="textPassword"
-            android:layout_marginTop="20dp"/>
-
-
-        <TextView
-            android:id="@+id/textViewRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chưa nhận được mã? Gửi lại mã"
-            android:layout_gravity="end"
-            android:textSize="18sp"
-            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical"
             android:background="?attr/selectableItemBackground"
-            android:padding="8dp"
-            />
-        <Button
-            android:id="@+id/buttonLogin"
+            android:layout_marginTop="16dp" >
+
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/baseline_arrow_back_24"
+                android:layout_marginEnd="2dp"
+                android:contentDescription="Back Button" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create a Account"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/edt_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Đăng Kí"
-            android:textSize="25sp"
-            android:layout_marginTop="60dp"
-            />
+            android:textSize="20sp"
+            android:hint="Username"
+            android:inputType="textPersonName"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/edt_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:textSize="20sp"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="20dp"/>
+        <EditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="PassWord"
+            android:text="10000sp"
+            android:textSize="20sp"
+            android:inputType="textPassword"
+            android:layout_marginTop="20dp"/>
+        <EditText
+            android:id="@+id/edt_confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm PassWord"
+            android:text="10000sp"
+            android:textSize="20sp"
+            android:inputType="textPassword"
+            android:layout_marginTop="20dp"/>
+
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:textSize="20sp"
+            android:backgroundTint="#F7945E"
+            android:layout_marginTop="30dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="16dp"
+                android:src="@drawable/facebook"></ImageView>
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="16dp"
+                android:src="@drawable/google"></ImageView>
+        </LinearLayout>
 
     </LinearLayout>
 

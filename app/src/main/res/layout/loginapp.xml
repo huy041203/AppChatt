@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_background">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,64 +12,77 @@
         android:gravity="center"
         android:padding="16dp"
         android:orientation="vertical">
+
         <ImageView
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:src="@drawable/icon_account_circle" />
-        <Spinner
-            android:id="@+id/spinner_country"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/editTextPhone"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Số điện thoại"
-            android:inputType="phone"
-            android:layout_marginTop="8dp"/>
+            android:text="Sign In To Your Account"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:layout_marginTop="50dp"
+            android:textColor="@color/white"
+            ></TextView>
 
         <EditText
-            android:id="@+id/editTextPassword"
+            android:id="@+id/edt_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mật khẩu"
+            android:hint="Username"
+            android:textSize="20sp"
+            android:inputType="textPersonName"
+            android:layout_marginTop="50dp"/>
+
+
+        <EditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="PassWord"
+            android:textSize="20sp"
+            android:text="100000sp"
             android:inputType="textPassword"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="45dp"/>
 
         <Button
-            android:id="@+id/buttonLogin"
-            android:layout_width="match_parent"
+            android:id="@+id/btn_login"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
-            android:text="Đăng Nhập"
-            android:textSize="25sp"
-            android:layout_marginTop="16dp"/>
+            android:text="Sign In"
+            android:textSize="20sp"
+            android:backgroundTint="#F7945E"
+            android:layout_marginTop="30dp"/>
 
         <TextView
-            android:id="@+id/textViewRegister"
+            android:id="@+id/tv_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chưa có tài khoản? Đăng ký ngay"
-            android:layout_gravity="end"
-            android:textSize="18sp"
-            android:layout_marginTop="16dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
             android:background="?attr/selectableItemBackground"
             android:padding="8dp"
-            />
+            android:textColor="@color/white"
+            android:text="Chưa có tài khoản? Đăng ký ngay"
+            android:textSize="19sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="40dp">
 
             <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_margin="16dp"
                 android:src="@drawable/facebook"></ImageView>
             <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_margin="16dp"
                 android:src="@drawable/google"></ImageView>
         </LinearLayout>
