@@ -13,14 +13,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.midterm.appchatt.R;
 import com.midterm.appchatt.model.ThemeType;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppliedThemeActivity {
 
     private TextView txtWelcome;
     private Button btnLogout;
     private FirebaseAuth mAuth;
-
-    // Se duoc doc tu firebase.
-    public static ThemeType currentAppTheme = ThemeType.LIGHT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

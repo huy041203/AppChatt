@@ -10,16 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.midterm.appchatt.R;
 import com.midterm.appchatt.databinding.MainSettingBinding;
 import com.midterm.appchatt.model.ThemeType;
+import com.midterm.appchatt.utils.ThemeToggler;
 
-public class MainSetting extends AppCompatActivity {
+public class MainSetting extends AppliedThemeActivity {
 
     private MainSettingBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Set theme phai dat truoc  super.onCreate()
-        setAppTheme(MainActivity.currentAppTheme);
-
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
 
@@ -42,12 +40,7 @@ public class MainSetting extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Toggle themes
-                if (MainActivity.currentAppTheme == ThemeType.LIGHT) {
-                    MainActivity.currentAppTheme = ThemeType.DARK;
-                } else {
-                    MainActivity.currentAppTheme = ThemeType.LIGHT;
-                }
-                recreate();
+                ThemeToggler.toggleTheme(MainSetting.this);
             }
         });
 
@@ -58,13 +51,5 @@ public class MainSetting extends AppCompatActivity {
                 // Add logging out action here.
             }
         });
-    }
-
-    public void setAppTheme(ThemeType type) {
-        if (type == ThemeType.LIGHT) {
-            setTheme(R.style.AppTheme);
-        } else {
-            setTheme(R.style.AppTheme_Dark);
-        }
     }
 }
