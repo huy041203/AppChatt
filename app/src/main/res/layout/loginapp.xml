@@ -20,15 +20,15 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/editTextPhone"
+            android:id="@+id/email_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Số điện thoại"
-            android:inputType="phone"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
             android:layout_marginTop="8dp"/>
 
         <EditText
-            android:id="@+id/editTextPassword"
+            android:id="@+id/password_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Mật khẩu"
@@ -36,7 +36,7 @@
             android:layout_marginTop="8dp"/>
 
         <Button
-            android:id="@+id/buttonLogin"
+            android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Đăng Nhập"
