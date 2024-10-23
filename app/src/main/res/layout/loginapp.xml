@@ -27,25 +27,62 @@
             android:textColor="@color/white"
             ></TextView>
 
-        <EditText
-            android:id="@+id/edt_username"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username"
-            android:textSize="20sp"
-            android:inputType="textPersonName"
-            android:layout_marginTop="50dp"/>
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            >
 
+            <EditText
+                android:id="@+id/edt_username"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Username"
+                android:textSize="23sp"
+                android:inputType="textPersonName"
+                android:layout_marginTop="45dp"
+                android:layout_weight="1"
+                android:padding="8dp"/>
 
-        <EditText
-            android:id="@+id/edt_password"
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="45dp"
+                android:src="@drawable/baseline_person_24" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="PassWord"
-            android:textSize="20sp"
-            android:text="100000sp"
-            android:inputType="textPassword"
-            android:layout_marginTop="45dp"/>
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            >
+
+            <EditText
+                android:id="@+id/edt_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="PassWord"
+                android:textSize="23sp"
+                android:layout_weight="1"
+                android:text="100000sp"
+                android:inputType="textPassword"
+                android:layout_marginTop="45dp"
+                android:padding="8dp"/>
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="45dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/password" />
+        </LinearLayout>
+
+
+
+
 
         <Button
             android:id="@+id/btn_login"
@@ -56,17 +93,38 @@
             android:backgroundTint="#F7945E"
             android:layout_marginTop="30dp"/>
 
-        <TextView
-            android:id="@+id/tv_register"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:background="?attr/selectableItemBackground"
-            android:padding="8dp"
-            android:textColor="@color/white"
-            android:text="Chưa có tài khoản? Đăng ký ngay"
-            android:textSize="19sp" />
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/tv_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="3dp"
+                android:background="?attr/selectableItemBackground"
+                android:textColor="@color/white"
+                android:text="Chưa có tài khoản?"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/tv_register2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="3dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="8dp"
+                android:textColor="@color/white"
+                android:layout_marginEnd="-10dp"
+                android:text="Đăng kí ngay"
+                android:clickable="true"
+                android:focusable="true"
+                android:textStyle="bold"
+                android:textSize="19sp" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -49,32 +49,82 @@
              />
 
 
-        <EditText
-            android:id="@+id/edt_username"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:hint="Username"
-            android:inputType="textPersonName"
-            android:layout_marginTop="20dp"/>
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            >
 
-        <EditText
-            android:id="@+id/edt_email"
+            <EditText
+                android:id="@+id/edt_username"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Username"
+                android:textSize="23sp"
+                android:inputType="textPersonName"
+                android:layout_marginTop="45dp"
+                android:layout_weight="1"
+                android:padding="8dp"/>
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="45dp"
+                android:src="@drawable/baseline_person_24" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
-            android:textSize="20sp"
-            android:inputType="textEmailAddress"
-            android:layout_marginTop="20dp"/>
-        <EditText
-            android:id="@+id/edt_password"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            >
+
+            <EditText
+                android:id="@+id/edt_email"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:layout_weight="1"
+                android:textSize="23sp"
+                android:inputType="textEmailAddress"
+                android:layout_marginTop="30dp"/>
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/baseline_email_24" />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="PassWord"
-            android:text="10000sp"
-            android:textSize="20sp"
-            android:inputType="textPassword"
-            android:layout_marginTop="20dp"/>
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            >
+
+            <EditText
+                android:id="@+id/edt_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="PassWord"
+                android:textSize="23sp"
+                android:layout_weight="1"
+                android:text="100000sp"
+                android:inputType="textPassword"
+                android:layout_marginTop="30dp"
+                android:padding="8dp"/>
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/password" />
+        </LinearLayout>
 
 
 
