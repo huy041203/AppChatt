@@ -11,12 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.midterm.appchatt.R;
+import com.midterm.appchatt.model.ThemeType;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView txtWelcome;
     private Button btnLogout;
     private FirebaseAuth mAuth;
+
+    // Se duoc doc tu firebase.
+    public static ThemeType currentAppTheme = ThemeType.LIGHT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
