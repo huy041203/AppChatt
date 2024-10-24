@@ -7,6 +7,7 @@ public class User {
     private String avatarUrl;
     private String status;  // online/offline
     private long lastActive;
+    private String userName;
 
     // Constructor mặc định cho Firebase
     public User() {}
@@ -67,4 +68,6 @@ public class User {
     }
 
 
+    public String getName() {
+    return  userName;}
 }

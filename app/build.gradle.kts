@@ -41,7 +41,10 @@ android {
 dependencies {
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
-
+    implementation ("com.github.bumptech.glide:glide:4.15.0")
+    implementation(libs.firebase.storage) // Check for the latest version
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.0")
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 
     implementation(libs.appcompat)
     implementation(libs.material)

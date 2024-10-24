@@ -9,4 +9,7 @@
     <color name="grey">#FFD9D9D9</color>
     <color name="second">#FFEFA985</color>
     <color name="separator">#FFDFA087</color>
+    <color name="gray_light">#D3D3D3</color>
+    <color name="gray_super_light">#F5F5F5</color>
+    
 </resources>
