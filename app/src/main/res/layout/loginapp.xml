@@ -27,6 +27,7 @@
             android:textColor="@color/white"
             ></TextView>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,12 +36,12 @@
             >
 
             <EditText
-                android:id="@+id/edt_username"
+                android:id="@+id/email_input"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="Username"
                 android:textSize="23sp"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:layout_marginTop="45dp"
                 android:layout_weight="1"
                 android:padding="8dp"/>
@@ -61,7 +62,7 @@
             >
 
             <EditText
-                android:id="@+id/edt_password"
+                android:id="@+id/password_input"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="PassWord"
@@ -85,8 +86,8 @@
 
 
         <Button
-            android:id="@+id/btn_login"
-            android:layout_width="230dp"
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sign In"
             android:textSize="20sp"

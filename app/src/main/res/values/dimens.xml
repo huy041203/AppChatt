@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="search_bar_margin_top">27dp</dimen>
+    <dimen name="search_bar_margin_horizontal">31dp</dimen>
+    <dimen name="search_bar_height">32dp</dimen>
+    <dimen name="content_margin_top">83dp</dimen>
+    <dimen name="list_margin_top_from_content">57dp</dimen>
+    <dimen name="list_margin_left_from_content">5dp</dimen>
+    <dimen name="avatar_size">133sp</dimen>
+    <dimen name="avatar_margin_vertical">53dp</dimen>
+    <dimen name="setting_menu_option_text_size">25sp</dimen>
+    <dimen name="setting_menu_option_margin_left">24dp</dimen>
+    <dimen name="setting_separator_margin_vertical">20dp</dimen>
+    <dimen name="setting_menu_option_title_margin_left">64dp</dimen>
+</resources>
