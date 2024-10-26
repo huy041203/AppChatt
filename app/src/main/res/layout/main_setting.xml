@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    tools:context=".MainSetting">
+    android:background="?attr/colorPrimary"
+    tools:context=".ui.activity.MainSetting">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -28,13 +28,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/navbar_bg"
-            android:backgroundTint="@color/lighter_background"
+            android:backgroundTint="?attr/colorBackground"
             android:orientation="vertical"
             />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/lighter_background"
+            android:background="?attr/colorBackground"
             android:layout_below="@id/the_rounder_part_of_the_content"
             />
         <LinearLayout
@@ -46,7 +46,7 @@
                 android:layout_width="@dimen/avatar_size"
                 android:layout_height="@dimen/avatar_size"
                 android:layout_gravity="center"
-                android:src="@drawable/icon_account_circle"
+                android:src="?attr/defaultAvatar"
                 android:layout_marginVertical="@dimen/avatar_margin_vertical"
                 />
             <LinearLayout
@@ -64,7 +64,7 @@
                         android:id="@+id/setting_account_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/setting_account_icon_dark"
+                        android:src="?attr/settingAccountIcon"
                         />
                     <TextView
                         android:id="@+id/setting_account_title"
@@ -72,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:text="Accounts"
                         android:layout_gravity="center"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/colorOnBackground"
                         android:textSize="@dimen/setting_menu_option_text_size"
                         android:textStyle="bold"
                         android:layout_marginLeft="@dimen/setting_menu_option_title_margin_left"
@@ -81,7 +81,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
-                    android:foreground="@color/separator"
+                    android:foreground="?attr/colorAccent"
                     android:layout_marginVertical="@dimen/setting_separator_margin_vertical" />
                 <RelativeLayout
                     android:id="@+id/setting_theme"
@@ -94,7 +94,7 @@
                         android:id="@+id/setting_theme_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/setting_theme_icon_dark"
+                        android:src="?attr/settingThemeIcon"
                         />
                     <TextView
                         android:id="@+id/setting_theme_title"
@@ -102,7 +102,7 @@
                         android:layout_height="wrap_content"
                         android:text="Theme"
                         android:layout_gravity="center"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/colorOnBackground"
                         android:textSize="@dimen/setting_menu_option_text_size"
                         android:textStyle="bold"
                         android:layout_marginLeft="@dimen/setting_menu_option_title_margin_left"
@@ -111,7 +111,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
-                    android:foreground="@color/separator"
+                    android:foreground="?attr/colorAccent"
                     android:layout_marginVertical="@dimen/setting_separator_margin_vertical"/>
                 <RelativeLayout
                     android:id="@+id/setting_logout"
@@ -124,7 +124,7 @@
                         android:id="@+id/setting_logout_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/setting_logout_icon_dark"
+                        android:src="?attr/settingLogoutIcon"
                         />
                     <TextView
                         android:id="@+id/setting_logout_title"
@@ -132,7 +132,7 @@
                         android:layout_height="wrap_content"
                         android:text="Log Out"
                         android:layout_gravity="center"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/colorOnBackground"
                         android:textSize="@dimen/setting_menu_option_text_size"
                         android:textStyle="bold"
                         android:layout_marginLeft="@dimen/setting_menu_option_title_margin_left"

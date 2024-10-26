@@ -1,4 +1,4 @@
-package com.midterm.appchatt;
+package com.midterm.appchatt.ui.activity;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -7,9 +7,12 @@ import android.view.View;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.midterm.appchatt.R;
 import com.midterm.appchatt.databinding.MainSettingBinding;
+import com.midterm.appchatt.model.ThemeType;
+import com.midterm.appchatt.utils.ThemeToggler;
 
-public class MainSetting extends AppCompatActivity {
+public class MainSetting extends AppliedThemeActivity {
 
     private MainSettingBinding binding;
 
@@ -24,7 +27,6 @@ public class MainSetting extends AppCompatActivity {
         binding.navbarView.settingsIcon.setImageResource(R.drawable.settings_highlights);
 
 
-
         binding.settingAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,7 +39,8 @@ public class MainSetting extends AppCompatActivity {
         binding.settingTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Add changing theme event here.
+                // Toggle themes
+                ThemeToggler.toggleTheme(MainSetting.this);
             }
         });
 

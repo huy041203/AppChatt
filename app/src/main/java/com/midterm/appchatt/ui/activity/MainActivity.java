@@ -14,6 +14,7 @@ import android.content.Intent;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.midterm.appchatt.R;
+import com.midterm.appchatt.model.ThemeType;
 import com.midterm.appchatt.model.User;
 import com.midterm.appchatt.databinding.ActivityMainBinding;
 import com.midterm.appchatt.ui.adapter.UserAdapter;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.OnUse
     private ActivityMainBinding binding;
     private MainViewModel viewModel;
     private UserAdapter adapter;
+    private TextView txtWelcome;
+    private Button btnLogout;
     private FirebaseAuth mAuth;
     private User currentUser;
 
