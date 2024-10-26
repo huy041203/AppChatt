@@ -2,6 +2,15 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="primary">#FF1E68D7</color>
+    <color name="background">#FF4D4E6D</color>
+    <color name="lighter_background">#FF6D5F9A</color>
+    <color name="text">#FFFFFFFF</color>
+    <color name="grey">#FFD9D9D9</color>
+    <color name="second">#FFEFA985</color>
+    <color name="separator">#FFDFA087</color>
+    <color name="gray_light">#D3D3D3</color>
+    <color name="gray_super_light">#F5F5F5</color>
 
     <!-- Colors for Light Mode -->
     <color name="colorPrimary">#6A4C93</color> <!-- Dark Purple -->
@@ -16,5 +25,6 @@
     <color name="colorBackgroundDark">#6D5F9A</color> <!-- Dark Background -->
     <color name="colorOnBackgroundDark">#FFFFFF</color> <!-- White Text -->
     <color name="colorAccent">#FF7F50</color> <!-- Coral Accent -->
+
 
 </resources>

@@ -1,12 +1,16 @@
 package com.midterm.appchatt.model;
 
-public class User {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class User implements Parcelable {
     private String userId;
     private String email;
     private String displayName;
     private String avatarUrl;
     private String status;  // online/offline
     private long lastActive;
+    private String userName;
 
     // Constructor mặc định cho Firebase
     public User() {}
@@ -67,4 +71,43 @@ public class User {
     }
 
 
+    public String getName() {
+    return  userName;}
+    protected User(Parcel in) {
+        userId = in.readString();
+        email = in.readString();
+        displayName = in.readString();
+        avatarUrl = in.readString();
+        status = in.readString();
+        lastActive = in.readLong();
+        userName = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(userId);
+        dest.writeString(email);
+        dest.writeString(displayName);
+        dest.writeString(avatarUrl);
+        dest.writeString(status);
+        dest.writeLong(lastActive);
+        dest.writeString(userName);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

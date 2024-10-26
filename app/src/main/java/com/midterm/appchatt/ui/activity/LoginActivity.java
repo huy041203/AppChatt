@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.loginapp);
 
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
-        authViewModel.registerUser("huy2003@gmail.com", "huy04122003", "Ngoc Huy");
+        authViewModel.registerUser("huy2002@gmail.com", "huy04122003", "Ngoc Huy");
         initializeViews();
         setupListeners();
         observeViewModel();
