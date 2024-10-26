@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_background">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,64 +12,136 @@
         android:gravity="center"
         android:padding="16dp"
         android:orientation="vertical">
+
         <ImageView
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:src="@drawable/icon_account_circle" />
-        <Spinner
-            android:id="@+id/spinner_country"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/email_input"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:layout_marginTop="8dp"/>
+            android:text="Sign In To Your Account"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:layout_marginTop="50dp"
+            android:textColor="@color/white"
+            ></TextView>
 
-        <EditText
-            android:id="@+id/password_input"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mật khẩu"
-            android:inputType="textPassword"
-            android:layout_marginTop="8dp"/>
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            >
+
+            <EditText
+                android:id="@+id/email_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Username"
+                android:textSize="23sp"
+                android:inputType="textEmailAddress"
+                android:layout_marginTop="45dp"
+                android:layout_weight="1"
+                android:padding="8dp"/>
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="45dp"
+                android:src="@drawable/baseline_person_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            >
+
+            <EditText
+                android:id="@+id/password_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="PassWord"
+                android:textSize="23sp"
+                android:layout_weight="1"
+                android:text="100000sp"
+                android:inputType="textPassword"
+                android:layout_marginTop="45dp"
+                android:padding="8dp"/>
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="45dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/password" />
+        </LinearLayout>
+
+
+
+
 
         <Button
             android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Đăng Nhập"
-            android:textSize="25sp"
-            android:layout_marginTop="16dp"/>
+            android:text="Sign In"
+            android:textSize="20sp"
+            android:backgroundTint="#F7945E"
+            android:layout_marginTop="30dp"/>
 
-        <TextView
-            android:id="@+id/textViewRegister"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chưa có tài khoản? Đăng ký ngay"
-            android:layout_gravity="end"
-            android:textSize="18sp"
-            android:layout_marginTop="16dp"
-            android:background="?attr/selectableItemBackground"
-            android:padding="8dp"
-            />
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/tv_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="3dp"
+                android:background="?attr/selectableItemBackground"
+                android:textColor="@color/white"
+                android:text="Chưa có tài khoản?"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/tv_register2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="3dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="8dp"
+                android:textColor="@color/white"
+                android:layout_marginEnd="-10dp"
+                android:text="Đăng kí ngay"
+                android:clickable="true"
+                android:focusable="true"
+                android:textStyle="bold"
+                android:textSize="19sp" />
+
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="40dp">
 
             <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_margin="16dp"
                 android:src="@drawable/facebook"></ImageView>
             <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_margin="16dp"
                 android:src="@drawable/google"></ImageView>
         </LinearLayout>
