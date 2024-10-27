@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,7 +18,7 @@ import com.midterm.appchatt.databinding.ActivityMessageBinding;
 
 import java.util.List;
 
-public class MessageActivity extends AppCompatActivity {
+public class MessageActivity extends AppliedThemeActivity {
     private ActivityMessageBinding binding;
     private MessageViewModel viewModel;
     private MessageAdapter adapter;
@@ -28,6 +30,7 @@ public class MessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMessageBinding.inflate(getLayoutInflater());
+
         setContentView(binding.getRoot());
 
         viewModel = new ViewModelProvider(this).get(MessageViewModel.class);

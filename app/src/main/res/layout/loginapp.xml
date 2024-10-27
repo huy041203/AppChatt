@@ -68,7 +68,6 @@
                 android:hint="PassWord"
                 android:textSize="23sp"
                 android:layout_weight="1"
-                android:text="100000sp"
                 android:inputType="textPassword"
                 android:layout_marginTop="45dp"
                 android:padding="8dp"/>
