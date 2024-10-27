@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="?attr/colorPrimary">
 
     <TextView
         android:id="@+id/chat_title"
@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="180dp"
-        android:background="@color/lighter_background"
+        android:background="?attr/colorBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@drawable/navbar_bg"
-        android:backgroundTint="@color/lighter_background"
+        android:backgroundTint="?attr/colorBackground"
         app:layout_constraintBottom_toTopOf="@+id/lighter_background"
         app:layout_constraintTop_toTopOf="@+id/recyclerUsers"
         tools:layout_editor_absoluteX="16dp" />

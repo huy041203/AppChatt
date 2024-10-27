@@ -42,6 +42,10 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.OnUse
 
         setupRecyclerView();
         observeData();
+
+        startActivity(new Intent(this, MainMessage.class));
+
+        finish();
     }
 
     private void setupAuth() {

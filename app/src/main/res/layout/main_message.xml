@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
+    tools:context=".ui.activity.MainMessage">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/search_bar_margin_top"
+        android:layout_marginHorizontal="@dimen/search_bar_margin_horizontal"
+        >
+        <EditText
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/search_bar_height"
+            android:background="@drawable/search_bar"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/search_bar"
+            android:layout_alignEnd="@id/search_bar"
+            android:src="@drawable/search"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="5dp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_content"
+        android:layout_marginTop="@dimen/content_margin_top"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:id="@+id/the_rounder_part_of_the_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/navbar_bg"
+            android:backgroundTint="?attr/colorBackground"
+            android:orientation="vertical"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/colorBackground"
+            android:layout_below="@id/the_rounder_part_of_the_content"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/list_margin_top_from_content"
+            android:layout_marginStart="@dimen/list_margin_left_from_content"
+            />
+
+    </RelativeLayout>
+
+    <include layout="@layout/navbar"
+        android:id="@+id/navbar_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>
