@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <!-- Màu nền của avatar -->
+    <solid android:color="#D3D3D3"/> <!-- Màu xám nhạt -->
+
+    <!-- Đường viền xung quanh (nếu cần) -->
+    <stroke
+        android:width="2dp"
+        android:color="#B0B0B0"/> <!-- Màu xám đậm hơn cho viền -->
+
+    <!-- Padding bên trong (nếu cần) -->
+    <padding
+        android:left="4dp"
+        android:top="4dp"
+        android:right="4dp"
+        android:bottom="4dp"/>
+
+</shape>

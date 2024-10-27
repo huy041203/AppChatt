@@ -43,7 +43,7 @@
                     android:text="Luis Suarez"
                     android:textSize="19sp"
                     android:textStyle="bold"
-                    android:textColor="@color/text"
+                    android:textColor="?attr/colorOnBackground"
                     />
                 <TextView
                     android:id="@+id/last_message_content"
@@ -52,7 +52,7 @@
                     android:text="Hello"
                     android:layout_marginTop="7sp"
                     android:textSize="13sp"
-                    android:textColor="@color/text"
+                    android:textColor="?attr/colorOnBackground"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -60,7 +60,7 @@
             android:id="@+id/chat_separator"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:background="@color/separator"
+            android:background="?attr/colorAccent"
             android:layout_marginTop="11dp" />
     </LinearLayout>
 
@@ -73,7 +73,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="10sp"
         android:textSize="14sp"
-        android:textColor="@color/text"
+        android:textColor="?attr/colorOnBackground"
         />
 
 </RelativeLayout>

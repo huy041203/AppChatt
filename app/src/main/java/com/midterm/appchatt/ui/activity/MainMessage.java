@@ -3,6 +3,7 @@ package com.midterm.appchatt.ui.activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +17,7 @@ import com.midterm.appchatt.model.Chat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainMessage extends AppCompatActivity {
+public class MainMessage extends AppliedThemeActivity {
 
     private MainMessageBinding binding;
     private List<Chat> chatList;
@@ -28,8 +29,10 @@ public class MainMessage extends AppCompatActivity {
         EdgeToEdge.enable(this);
 
         binding = MainMessageBinding.inflate(getLayoutInflater());
+        Log.d("IDEBUG", "Before setting content view");
         setContentView(binding.getRoot());
 
+        Log.d("IDEBUG", "Setting navbar");
         binding.navbarView.messageIcon.setImageResource(R.drawable.message_highlight);
 
         chatList = new ArrayList<>();
