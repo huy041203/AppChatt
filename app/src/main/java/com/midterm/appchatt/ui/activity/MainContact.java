@@ -1,18 +1,17 @@
-package com.midterm.appchatt;
+package com.midterm.appchatt.ui.activity;
 
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.midterm.appchatt.adapters.ContactAdapter;
+import com.midterm.appchatt.R;
+import com.midterm.appchatt.ui.adapter.ContactAdapter;
 import com.midterm.appchatt.databinding.MainContactBinding;
-import com.midterm.appchatt.models.Contact;
+import com.midterm.appchatt.model.Contact;
 
 import java.util.ArrayList;
 import java.util.List;

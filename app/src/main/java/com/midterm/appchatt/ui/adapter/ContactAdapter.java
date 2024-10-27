@@ -1,4 +1,4 @@
-package com.midterm.appchatt.adapters;
+package com.midterm.appchatt.ui.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,9 +6,9 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.midterm.appchatt.R;
-import com.midterm.appchatt.databinding.ContactItemBinding;
-import com.midterm.appchatt.models.Contact;
+
+import com.midterm.appchatt.databinding.ItemContactBinding;
+import com.midterm.appchatt.model.Contact;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ChatView
     @Override
     public ChatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        return new ChatViewHolder(ContactItemBinding.inflate(layoutInflater, parent, false));
+        return new ChatViewHolder(ItemContactBinding.inflate(layoutInflater, parent, false));
     }
 
     @Override
@@ -62,9 +62,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ChatView
     }
 
     public static class ChatViewHolder extends RecyclerView.ViewHolder {
-        private ContactItemBinding binding;
+        private ItemContactBinding binding;
 
-        public ChatViewHolder(ContactItemBinding binding) {
+        public ChatViewHolder(ItemContactBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
