@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="13dp"
+    android:background="@null"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/firstElementMargin"
+            android:layout_marginTop="@dimen/list_margin_top_from_content"
+            android:visibility="gone"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"
+            android:orientation="horizontal"
+            android:layout_marginStart="6dp"
+            >
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/default_profile_picture"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="13dp"
+                android:layout_marginStart="17dp"
+                >
+                <TextView
+                    android:id="@+id/message_display_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Luis Suarez"
+                    android:textSize="21dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <View
+            android:id="@+id/chat_separator"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:foreground="@color/separator"
+            android:layout_marginTop="11dp" />
+    </LinearLayout>
+
+</RelativeLayout>
