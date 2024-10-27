@@ -1,9 +1,11 @@
 package com.midterm.appchatt.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +15,7 @@ import com.midterm.appchatt.R;
 import com.midterm.appchatt.ui.adapter.ChatAdapter;
 import com.midterm.appchatt.databinding.MainMessageBinding;
 import com.midterm.appchatt.model.Chat;
+import com.midterm.appchatt.utils.NavbarSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,30 +32,31 @@ public class MainMessage extends AppliedThemeActivity {
         EdgeToEdge.enable(this);
 
         binding = MainMessageBinding.inflate(getLayoutInflater());
-        Log.d("IDEBUG", "Before setting content view");
         setContentView(binding.getRoot());
-
-        Log.d("IDEBUG", "Setting navbar");
-        binding.navbarView.messageIcon.setImageResource(R.drawable.message_highlight);
 
         chatList = new ArrayList<>();
         adapter = new ChatAdapter(chatList);
         binding.rvList.setAdapter(adapter);
         binding.rvList.setLayoutManager(new LinearLayoutManager(this));
 
-        // Add some templates.
-        chatList.add(new Chat("", "Nhat Nguyen",
-                "Ủa em?", "14:22"));
-        chatList.add(new Chat("", "Duy An",
-                "OK", "09:34"));
-        chatList.add(new Chat("", "Ngoc Huy",
-                "Đã xong deadline chưa em?", "Yesterday"));
-        chatList.add(new Chat("", "Mommy",
-                "Ngủ đi", "24/09/2023"));
+//        // Add some templates.
+//        chatList.add(new Chat("", "Nhat Nguyen",
+//                "Ủa em?", "14:22"));
+//        chatList.add(new Chat("", "Duy An",
+//                "OK", "09:34"));
+//        chatList.add(new Chat("", "Ngoc Huy",
+//                "Đã xong deadline chưa em?", "Yesterday"));
+//        chatList.add(new Chat("", "Mommy",
+//                "Ngủ đi", "24/09/2023"));
+//
 
+        configSearchBar();
+        NavbarSupport.setup(this, binding.navbarView);
 
+    }
 
-        //Search bar configuration.
+    private void configSearchBar() {
+        // Search bar configuration.
         binding.searchBar.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -82,7 +86,5 @@ public class MainMessage extends AppliedThemeActivity {
 
             }
         });
-
-
     }
 }

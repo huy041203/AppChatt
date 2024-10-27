@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.midterm.appchatt.databinding.ChatItemBinding;
+import com.midterm.appchatt.databinding.ItemChatBinding;
 import com.midterm.appchatt.model.Chat;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     @Override
     public ChatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        return new ChatViewHolder(ChatItemBinding.inflate(layoutInflater, parent, false));
+        return new ChatViewHolder(ItemChatBinding.inflate(layoutInflater, parent, false));
     }
 
     @Override
@@ -61,9 +61,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     }
 
     public static class ChatViewHolder extends RecyclerView.ViewHolder {
-        private ChatItemBinding binding;
+        private ItemChatBinding binding;
 
-        public ChatViewHolder(ChatItemBinding binding) {
+        public ChatViewHolder(ItemChatBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

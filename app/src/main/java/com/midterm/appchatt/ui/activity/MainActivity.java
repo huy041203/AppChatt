@@ -21,13 +21,12 @@ import com.midterm.appchatt.model.User;
 import com.midterm.appchatt.databinding.ActivityMainBinding;
 import com.midterm.appchatt.ui.adapter.UserAdapter;
 import com.midterm.appchatt.ui.viewmodel.MainViewModel;
+import com.midterm.appchatt.utils.NavbarSupport;
 
-public class MainActivity extends AppCompatActivity implements UserAdapter.OnUserClickListener {
+public class MainActivity extends AppliedThemeActivity implements UserAdapter.OnUserClickListener {
     private ActivityMainBinding binding;
     private MainViewModel viewModel;
     private UserAdapter adapter;
-    private TextView txtWelcome;
-    private Button btnLogout;
     private FirebaseAuth mAuth;
     private User currentUser;
 
@@ -43,9 +42,7 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.OnUse
         setupRecyclerView();
         observeData();
 
-        startActivity(new Intent(this, MainMessage.class));
-
-        finish();
+        NavbarSupport.setup(this, binding.navbarView);
     }
 
     private void setupAuth() {

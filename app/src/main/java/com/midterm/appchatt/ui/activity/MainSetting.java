@@ -1,5 +1,6 @@
 package com.midterm.appchatt.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.midterm.appchatt.R;
 import com.midterm.appchatt.databinding.MainSettingBinding;
 import com.midterm.appchatt.model.ThemeType;
+import com.midterm.appchatt.utils.NavbarSupport;
 import com.midterm.appchatt.utils.ThemeToggler;
 
 public class MainSetting extends AppliedThemeActivity {
@@ -23,9 +25,6 @@ public class MainSetting extends AppliedThemeActivity {
 
         binding = MainSettingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        binding.navbarView.settingsIcon.setImageResource(R.drawable.settings_highlights);
-
 
         binding.settingAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,5 +50,8 @@ public class MainSetting extends AppliedThemeActivity {
                 // Add logging out action here.
             }
         });
+
+
+        NavbarSupport.setup(this, binding.navbarView);
     }
 }
