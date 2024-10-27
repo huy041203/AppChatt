@@ -1,21 +1,17 @@
-package com.midterm.appchatt;
+package com.midterm.appchatt.ui.activity;
 
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.midterm.appchatt.adapters.ChatAdapter;
+import com.midterm.appchatt.R;
+import com.midterm.appchatt.ui.adapter.ChatAdapter;
 import com.midterm.appchatt.databinding.MainMessageBinding;
-import com.midterm.appchatt.models.Chat;
+import com.midterm.appchatt.model.Chat;
 
 import java.util.ArrayList;
 import java.util.List;

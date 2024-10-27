@@ -1,4 +1,4 @@
-package com.midterm.appchatt.adapters;
+package com.midterm.appchatt.ui.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.midterm.appchatt.databinding.ChatItemBinding;
-import com.midterm.appchatt.models.Chat;
+import com.midterm.appchatt.model.Chat;
 
 import java.util.List;
 

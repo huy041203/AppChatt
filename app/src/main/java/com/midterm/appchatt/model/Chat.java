@@ -1,4 +1,4 @@
-package com.midterm.appchatt.models;
+package com.midterm.appchatt.model;
 
 public class Chat {
     private String avatarUrl;
