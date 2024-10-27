@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.midterm.appchatt.R;
 import com.midterm.appchatt.databinding.NavbarBinding;
+import com.midterm.appchatt.ui.activity.MainActivity;
 import com.midterm.appchatt.ui.activity.MainMessage;
 import com.midterm.appchatt.ui.activity.MainSetting;
 
@@ -21,7 +22,7 @@ public class NavbarSupport {
     public static void setup(AppCompatActivity activity, NavbarBinding binding) {
 
         NavbarOption[] options = {
-                new NavbarOption(MainMessage.class, binding.messageIcon,
+                new NavbarOption(MainActivity.class, binding.messageIcon,
                         R.drawable.message_highlight),
                 new NavbarOption(MainSetting.class, binding.settingsIcon,
                         R.drawable.settings_highlights),
@@ -32,10 +33,11 @@ public class NavbarSupport {
                 option.get_btn().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        activity.startActivity(new Intent(
-                                activity,
-                                option.get_class()
-                        ));
+                        Intent intent = new Intent(activity, option.get_class());
+
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+                        activity.startActivity(intent);
                         activity.finish();
                     }
                 });

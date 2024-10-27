@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.midterm.appchatt.R;
+import com.midterm.appchatt.databinding.ItemUserBinding;
 import com.midterm.appchatt.model.User;
 
 public class UserAdapter extends ListAdapter<User, UserAdapter.UserViewHolder> {
@@ -43,14 +44,25 @@ public class UserAdapter extends ListAdapter<User, UserAdapter.UserViewHolder> {
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_user, parent, false);
-        return new UserViewHolder(view);
+        ItemUserBinding binding = ItemUserBinding.inflate(LayoutInflater
+                .from(parent.getContext()), parent, false);
+        return new UserViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         holder.bind(getItem(position));
+        if (position + 1 == this.getItemCount()) {
+            // If binding the last item, it will hide the separator for better
+            //          performance.
+            holder.toggleBottomSeparator(false);
+        } else {
+            // With other items, the separator is needed for sure.
+            holder.toggleBottomSeparator(true);
+        }
+        if (position == 0) {
+            holder.showMarginTopForFirstItem();
+        }
     }
 
     class UserViewHolder extends RecyclerView.ViewHolder {
@@ -59,16 +71,18 @@ public class UserAdapter extends ListAdapter<User, UserAdapter.UserViewHolder> {
         private final TextView tvEmail;
         private final View statusIndicator;
         private final TextView tvLastActive;
+        private final ItemUserBinding binding;
 
-        public UserViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imgAvatar = itemView.findViewById(R.id.imgAvatar);
-            tvName = itemView.findViewById(R.id.tvName);
-            tvEmail = itemView.findViewById(R.id.tvEmail);
-            statusIndicator = itemView.findViewById(R.id.statusIndicator);
-            tvLastActive = itemView.findViewById(R.id.tvLastActive);
+        public UserViewHolder(@NonNull ItemUserBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+            imgAvatar = binding.imgAvatar;
+            tvName = binding.tvName;
+            tvEmail = binding.tvEmail;
+            statusIndicator = binding.statusIndicator;
+            tvLastActive = binding.tvLastActive;
 
-            itemView.setOnClickListener(v -> {
+            binding.container.setOnClickListener(v -> {
                 int position = getAbsoluteAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     listener.onUserClick(getItem(position));
@@ -126,6 +140,18 @@ public class UserAdapter extends ListAdapter<User, UserAdapter.UserViewHolder> {
                 long days = minutes / (24 * 60);
                 return days + " days ago";
             }
+        }
+
+
+        public void toggleBottomSeparator(boolean foo) {
+            this.binding.chatSeparator.setVisibility(foo ? View.VISIBLE : View.GONE);
+        }
+
+        // Show margin top for the first item instead of entire recycler view for
+        //        avoiding the bug that some items unexpectedly hide (bad effect)
+        //        into the void.
+        public void showMarginTopForFirstItem() {
+            this.binding.firstElementMargin.setVisibility(View.VISIBLE);
         }
     }
 }

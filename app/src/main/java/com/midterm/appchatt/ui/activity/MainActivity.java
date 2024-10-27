@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +20,8 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.midterm.appchatt.R;
+import com.midterm.appchatt.databinding.MainMessageBinding;
+import com.midterm.appchatt.model.Chat;
 import com.midterm.appchatt.model.ThemeType;
 import com.midterm.appchatt.model.User;
 import com.midterm.appchatt.databinding.ActivityMainBinding;
@@ -23,17 +29,21 @@ import com.midterm.appchatt.ui.adapter.UserAdapter;
 import com.midterm.appchatt.ui.viewmodel.MainViewModel;
 import com.midterm.appchatt.utils.NavbarSupport;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppliedThemeActivity implements UserAdapter.OnUserClickListener {
-    private ActivityMainBinding binding;
+    private MainMessageBinding binding;
     private MainViewModel viewModel;
-    private UserAdapter adapter;
+    public UserAdapter adapter;
     private FirebaseAuth mAuth;
     private User currentUser;
+    private List<User> userList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = MainMessageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setupViewModel();
@@ -41,6 +51,8 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
 
         setupRecyclerView();
         observeData();
+
+        configSearchBar();
 
         NavbarSupport.setup(this, binding.navbarView);
     }
@@ -72,8 +84,8 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
 
     private void setupRecyclerView() {
         adapter = new UserAdapter(this);
-        binding.recyclerUsers.setAdapter(adapter);
-        binding.recyclerUsers.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvList.setAdapter(adapter);
+        binding.rvList.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void observeData() {
@@ -82,6 +94,7 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
             // Filter out current user from the list
             users.removeIf(user -> user.getUserId().equals(currentUser.getUserId()));
             adapter.submitList(users);
+            userList = users;
         });
 
         viewModel.getError().observe(this, error -> {
@@ -139,5 +152,37 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
         if (currentUser != null) {
             viewModel.updateUserStatus(currentUser.getUserId(), "offline");
         }
+    }
+
+    private void configSearchBar() {
+        // Search bar configuration.
+        binding.searchBar.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() == 0) {
+                    adapter.submitList(userList);
+                }
+
+                List<User> filteredList = new ArrayList<>();
+                for (User user : userList) {
+                    if (user.getDisplayName().toLowerCase()
+                            .contains(charSequence.toString().toLowerCase())) {
+                        filteredList.add(user);
+                    }
+                }
+                adapter.submitList(filteredList);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 }

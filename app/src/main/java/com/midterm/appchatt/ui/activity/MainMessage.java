@@ -12,9 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.midterm.appchatt.R;
+import com.midterm.appchatt.model.User;
 import com.midterm.appchatt.ui.adapter.ChatAdapter;
 import com.midterm.appchatt.databinding.MainMessageBinding;
 import com.midterm.appchatt.model.Chat;
+import com.midterm.appchatt.ui.adapter.UserAdapter;
 import com.midterm.appchatt.utils.NavbarSupport;
 
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ public class MainMessage extends AppliedThemeActivity {
 
         chatList = new ArrayList<>();
         adapter = new ChatAdapter(chatList);
+
         binding.rvList.setAdapter(adapter);
         binding.rvList.setLayoutManager(new LinearLayoutManager(this));
 
