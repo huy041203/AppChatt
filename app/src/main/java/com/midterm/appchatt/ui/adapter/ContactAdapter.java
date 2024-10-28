@@ -4,41 +4,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-<<<<<<<< HEAD:app/src/main/java/com/midterm/appchatt/ui/adapter/ContactAdapter.java
 
 import com.midterm.appchatt.databinding.ItemContactBinding;
 import com.midterm.appchatt.model.Contact;
-========
-import com.midterm.appchatt.databinding.ItemChatBinding;
-import com.midterm.appchatt.model.Chat;
->>>>>>>> dev:app/src/main/java/com/midterm/appchatt/ui/adapter/ChatAdapter.java
 
 import java.util.List;
 
-public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder> {
+public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
 
-    private List<Chat> chatList;
-    private List<Chat> backupChatList;
+    private List<Contact> contactList;
+    private List<Contact> backupContactList;
 
-    public ChatAdapter(List<Chat> chatList) {
-        this.chatList = chatList;
+    public ContactAdapter(List<Contact> chatList) {
+        this.contactList = chatList;
     }
 
     @Override
-    public ChatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-<<<<<<<< HEAD:app/src/main/java/com/midterm/appchatt/ui/adapter/ContactAdapter.java
-        return new ChatViewHolder(ItemContactBinding.inflate(layoutInflater, parent, false));
-========
-        return new ChatViewHolder(ItemChatBinding.inflate(layoutInflater, parent, false));
->>>>>>>> dev:app/src/main/java/com/midterm/appchatt/ui/adapter/ChatAdapter.java
+        return new ContactViewHolder(ItemContactBinding.inflate(layoutInflater, parent, false));
     }
 
+    @NonNull
     @Override
-    public void onBindViewHolder(ChatViewHolder holder, int position) {
-        Chat chat = chatList.get(position);
+    public void onBindViewHolder(ContactViewHolder holder, int position) {
+        Contact chat = contactList.get(position);
         holder.bind(chat);
         if (position + 1 == this.getItemCount()) {
             // If binding the last item, it will hide the separator for better
@@ -55,42 +48,34 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
 
     @Override
     public int getItemCount() {
-        return chatList.size();
+        return contactList.size();
     }
 
     // The adapter will temporarily carry a new chat list and backup the old one.
-    public void notifyThereIsAFilteringAction(List<Chat> tempChatList) {
-        this.backupChatList = this.chatList;
-        this.chatList = tempChatList;
+    public void notifyThereIsAFilteringAction(List<Contact> tempContactList) {
+        this.backupContactList = this.contactList;
+        this.contactList = tempContactList;
     }
 
     public void finalizeFilteringAction() {
-        if (this.backupChatList != null) {
-            this.chatList = backupChatList;
+        if (this.backupContactList != null) {
+            this.contactList = backupContactList;
         }
     }
 
-    public static class ChatViewHolder extends RecyclerView.ViewHolder {
-<<<<<<<< HEAD:app/src/main/java/com/midterm/appchatt/ui/adapter/ContactAdapter.java
+    public static class ContactViewHolder extends RecyclerView.ViewHolder {
         private ItemContactBinding binding;
 
-        public ChatViewHolder(ItemContactBinding binding) {
-========
-        private ItemChatBinding binding;
-
-        public ChatViewHolder(ItemChatBinding binding) {
->>>>>>>> dev:app/src/main/java/com/midterm/appchatt/ui/adapter/ChatAdapter.java
+        public ContactViewHolder(ItemContactBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
-        public void bind(Chat chat) {
-            if (!chat.getAvatarUrl().equals("")) {
+        public void bind(Contact contact) {
+            if (!contact.getAvatarUrl().equals("")) {
                 // If there is an url of avatar...
             }
-            binding.lastMessageContent.setText(chat.getLastMessageContent());
-            binding.messageDisplayName.setText(chat.getDisplayName());
-            binding.timeView.setText(chat.getTime());
+            binding.messageDisplayName.setText(contact.getDisplayName());
         }
 
         public void toggleBottomSeparator(boolean foo) {

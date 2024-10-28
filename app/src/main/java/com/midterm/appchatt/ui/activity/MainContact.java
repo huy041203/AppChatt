@@ -4,49 +4,36 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-<<<<<<<< HEAD:app/src/main/java/com/midterm/appchatt/ui/activity/MainContact.java
-========
-import android.util.Log;
-import android.view.View;
->>>>>>>> dev:app/src/main/java/com/midterm/appchatt/ui/activity/MainMessage.java
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.midterm.appchatt.R;
-<<<<<<<< HEAD:app/src/main/java/com/midterm/appchatt/ui/activity/MainContact.java
 import com.midterm.appchatt.ui.adapter.ContactAdapter;
 import com.midterm.appchatt.databinding.MainContactBinding;
 import com.midterm.appchatt.model.Contact;
-========
-import com.midterm.appchatt.model.User;
-import com.midterm.appchatt.ui.adapter.ChatAdapter;
-import com.midterm.appchatt.databinding.MainMessageBinding;
-import com.midterm.appchatt.model.Chat;
-import com.midterm.appchatt.ui.adapter.UserAdapter;
 import com.midterm.appchatt.utils.NavbarSupport;
->>>>>>>> dev:app/src/main/java/com/midterm/appchatt/ui/activity/MainMessage.java
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainMessage extends AppliedThemeActivity {
+public class MainContact extends AppliedThemeActivity {
 
-    private MainMessageBinding binding;
-    private List<Chat> chatList;
-    private ChatAdapter adapter;
+    private MainContactBinding binding;
+    private List<Contact> contactList;
+    private ContactAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
 
-        binding = MainMessageBinding.inflate(getLayoutInflater());
+        binding = MainContactBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        chatList = new ArrayList<>();
-        adapter = new ChatAdapter(chatList);
+        contactList = new ArrayList<>();
+        adapter = new ContactAdapter(contactList);
 
         binding.rvList.setAdapter(adapter);
         binding.rvList.setLayoutManager(new LinearLayoutManager(this));
@@ -82,9 +69,9 @@ public class MainMessage extends AppliedThemeActivity {
                     adapter.finalizeFilteringAction();
                 }
 
-                List<Chat> filteredList = new ArrayList<>();
+                List<Contact> filteredList = new ArrayList<>();
                 adapter.notifyThereIsAFilteringAction(filteredList);
-                for (Chat contact : chatList) {
+                for (Contact contact : contactList) {
                     if (contact.getDisplayName().toLowerCase()
                             .contains(charSequence.toString().toLowerCase())) {
                         filteredList.add(contact);

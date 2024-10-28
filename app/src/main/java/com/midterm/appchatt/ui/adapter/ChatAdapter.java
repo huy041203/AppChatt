@@ -6,18 +6,12 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-<<<<<<<< HEAD:app/src/main/java/com/midterm/appchatt/ui/adapter/ContactAdapter.java
-
-import com.midterm.appchatt.databinding.ItemContactBinding;
-import com.midterm.appchatt.model.Contact;
-========
 import com.midterm.appchatt.databinding.ItemChatBinding;
 import com.midterm.appchatt.model.Chat;
->>>>>>>> dev:app/src/main/java/com/midterm/appchatt/ui/adapter/ChatAdapter.java
 
 import java.util.List;
 
-public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder> {
+public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ContactViewHolder> {
 
     private List<Chat> chatList;
     private List<Chat> backupChatList;
@@ -27,17 +21,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     }
 
     @Override
-    public ChatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-<<<<<<<< HEAD:app/src/main/java/com/midterm/appchatt/ui/adapter/ContactAdapter.java
-        return new ChatViewHolder(ItemContactBinding.inflate(layoutInflater, parent, false));
-========
-        return new ChatViewHolder(ItemChatBinding.inflate(layoutInflater, parent, false));
->>>>>>>> dev:app/src/main/java/com/midterm/appchatt/ui/adapter/ChatAdapter.java
+        return new ContactViewHolder(ItemChatBinding.inflate(layoutInflater, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ChatViewHolder holder, int position) {
+    public void onBindViewHolder(ContactViewHolder holder, int position) {
         Chat chat = chatList.get(position);
         holder.bind(chat);
         if (position + 1 == this.getItemCount()) {
@@ -70,16 +60,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         }
     }
 
-    public static class ChatViewHolder extends RecyclerView.ViewHolder {
-<<<<<<<< HEAD:app/src/main/java/com/midterm/appchatt/ui/adapter/ContactAdapter.java
-        private ItemContactBinding binding;
-
-        public ChatViewHolder(ItemContactBinding binding) {
-========
+    public static class ContactViewHolder extends RecyclerView.ViewHolder {
         private ItemChatBinding binding;
 
-        public ChatViewHolder(ItemChatBinding binding) {
->>>>>>>> dev:app/src/main/java/com/midterm/appchatt/ui/adapter/ChatAdapter.java
+        public ContactViewHolder(ItemChatBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

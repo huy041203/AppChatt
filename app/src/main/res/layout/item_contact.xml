@@ -43,7 +43,7 @@
                     android:text="Luis Suarez"
                     android:textSize="21dp"
                     android:textStyle="bold"
-                    android:textColor="@color/text"
+                    android:textColor="?attr/colorOnBackground"
                     />
             </LinearLayout>
         </LinearLayout>

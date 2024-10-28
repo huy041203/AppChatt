@@ -9,8 +9,10 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.midterm.appchatt.R;
+import com.midterm.appchatt.databinding.MainContactBinding;
 import com.midterm.appchatt.databinding.NavbarBinding;
 import com.midterm.appchatt.ui.activity.MainActivity;
+import com.midterm.appchatt.ui.activity.MainContact;
 import com.midterm.appchatt.ui.activity.MainMessage;
 import com.midterm.appchatt.ui.activity.MainSetting;
 
@@ -24,6 +26,8 @@ public class NavbarSupport {
         NavbarOption[] options = {
                 new NavbarOption(MainActivity.class, binding.messageIcon,
                         R.drawable.message_highlight),
+                new NavbarOption(MainContact.class, binding.contactIcon,
+                        R.drawable.contact_list_highlight),
                 new NavbarOption(MainSetting.class, binding.settingsIcon,
                         R.drawable.settings_highlights),
         };
