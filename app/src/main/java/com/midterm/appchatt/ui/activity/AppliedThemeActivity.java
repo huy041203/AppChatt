@@ -18,10 +18,4 @@ public class AppliedThemeActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
     }
-
-    @Override
-    public void finish() {
-        this.recreate();
-        super.finish();
-    }
 }

@@ -30,14 +30,6 @@
         android:exported="false"/>
 
 
-        <activity android:name=".ui.activity.MainSetting"
-            android:exported="false" />
-        <activity android:name=".ui.activity.MainMessage"
-            android:exported="false" />
-        <activity android:name=".ui.activity.MainContact"
-            android:exported="false" />
-
-
     </application>
 
 </manifest>

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewbinding.ViewBinding;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,25 +27,41 @@ import com.midterm.appchatt.model.ThemeType;
 import com.midterm.appchatt.model.User;
 import com.midterm.appchatt.databinding.ActivityMainBinding;
 import com.midterm.appchatt.ui.adapter.UserAdapter;
+import com.midterm.appchatt.ui.view.MainContact;
+import com.midterm.appchatt.ui.view.MainSetting;
+import com.midterm.appchatt.ui.view.Navbar;
 import com.midterm.appchatt.ui.viewmodel.MainViewModel;
-import com.midterm.appchatt.utils.NavbarSupport;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppliedThemeActivity implements UserAdapter.OnUserClickListener {
+public class MainActivity extends AppliedThemeActivity
+        implements UserAdapter.OnUserClickListener,
+        MainSetting.SettingLogoutEventListener {
     private MainMessageBinding binding;
     private MainViewModel viewModel;
     public UserAdapter adapter;
     private FirebaseAuth mAuth;
     private User currentUser;
     private List<User> userList;
+    private MainContact mainContactUI;
+    private MainSetting mainSettingUI;
+
+    // Backup binding hien tai dang hien thi de khi doi theme,
+    //      khong quay lai MainMessageBinding.
+    private ViewBinding renderingBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = MainMessageBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+
+        // Luc bat dau khoi chay chuong trinh renderingBinding co
+        //   gia tri la null, vi vay ta chay binding nhu mac dinh.
+        if (renderingBinding != null)
+            setContentView(renderingBinding.getRoot());
+        else
+            setContentView(binding.getRoot());
 
         setupViewModel();
         setupAuth();
@@ -54,7 +71,13 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
 
         configSearchBar();
 
-        NavbarSupport.setup(this, binding.navbarView);
+
+
+        mainContactUI = MainContact.get_instance(this);
+        mainSettingUI = MainSetting.get_instance(this);
+        mainSettingUI.bindLogoutEvent(this);
+
+        Navbar.setup(this);
     }
 
     private void setupAuth() {
@@ -138,7 +161,8 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
         return super.onOptionsItemSelected(item);
     }
 
-    private void logout() {
+    @Override
+    public void logout() {
         // Update user status to offline before logging out
         viewModel.updateUserStatus(currentUser.getUserId(), "offline");
         mAuth.signOut();
@@ -156,7 +180,7 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
 
     private void configSearchBar() {
         // Search bar configuration.
-        binding.searchBar.addTextChangedListener(new TextWatcher() {
+        binding.searchBarView.searchBar.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -184,5 +208,22 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
 
             }
         });
+    }
+
+    public MainContact getMainContactUI() {
+        return mainContactUI;
+    }
+
+    public MainSetting getMainSettingUI() {
+        return mainSettingUI;
+    }
+
+    public MainMessageBinding getBinding() {
+        return binding;
+    }
+
+    public void activeBinding(ViewBinding binding) {
+        renderingBinding = binding;
+        setContentView(binding.getRoot());
     }
 }
