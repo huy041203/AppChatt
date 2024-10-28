@@ -9,6 +9,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.midterm.appchatt.R;
+import com.midterm.appchatt.databinding.AccountSettingsBinding;
 import com.midterm.appchatt.databinding.MainSettingBinding;
 import com.midterm.appchatt.model.ThemeType;
 import com.midterm.appchatt.utils.NavbarSupport;
@@ -17,6 +18,7 @@ import com.midterm.appchatt.utils.ThemeToggler;
 public class MainSetting extends AppliedThemeActivity {
 
     private MainSettingBinding binding;
+    private AccountSettingsBinding accountSettingsBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +26,16 @@ public class MainSetting extends AppliedThemeActivity {
         EdgeToEdge.enable(this);
 
         binding = MainSettingBinding.inflate(getLayoutInflater());
+        accountSettingsBinding = AccountSettingsBinding.inflate(getLayoutInflater());
+        configAccountSettingsLayout();
+
         setContentView(binding.getRoot());
 
         binding.settingAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Add account settings intent running here.
+                setContentView(accountSettingsBinding.getRoot());
             }
         });
 
@@ -48,10 +54,20 @@ public class MainSetting extends AppliedThemeActivity {
             @Override
             public void onClick(View view) {
                 // Add logging out action here.
+                MainActivity.get_instance().logout();
             }
         });
 
 
         NavbarSupport.setup(this, binding.navbarView);
+    }
+
+    private void configAccountSettingsLayout() {
+        accountSettingsBinding.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setContentView(binding.getRoot());
+            }
+        });
     }
 }

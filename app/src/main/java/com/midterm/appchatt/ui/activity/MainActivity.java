@@ -40,6 +40,9 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
     private User currentUser;
     private List<User> userList;
 
+    // Cho truy cap ham logout tu MainSetting.java
+    private static MainActivity _instance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,7 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
         configSearchBar();
 
         NavbarSupport.setup(this, binding.navbarView);
+        _instance = this;
     }
 
     private void setupAuth() {
@@ -138,7 +142,7 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
         return super.onOptionsItemSelected(item);
     }
 
-    private void logout() {
+    void logout() {
         // Update user status to offline before logging out
         viewModel.updateUserStatus(currentUser.getUserId(), "offline");
         mAuth.signOut();
@@ -184,5 +188,9 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
 
             }
         });
+    }
+
+    public static MainActivity get_instance() {
+        return _instance;
     }
 }

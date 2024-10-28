@@ -33,6 +33,7 @@ public class NavbarSupport {
         };
 
         for (NavbarOption option : options) {
+
             if (!option.get_class().isInstance(activity)) {
                 option.get_btn().setOnClickListener(new View.OnClickListener() {
                     @Override
