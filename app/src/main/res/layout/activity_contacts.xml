@@ -21,11 +21,25 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewContacts"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_below="@id/toolbar"
+        android:layout_above="@+id/buttonConfirmSelection"
         android:layout_marginTop="8dp"
         android:scrollbars="vertical"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="0.5dp" />
 
+    <!-- Confirm Selection Button -->
+    <Button
+        android:id="@+id/buttonConfirmSelection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:padding="12dp"
+        android:text="Confirm Selection"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/white" />
 </RelativeLayout>
+
