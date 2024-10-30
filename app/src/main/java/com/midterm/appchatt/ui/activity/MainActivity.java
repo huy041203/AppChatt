@@ -22,10 +22,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.midterm.appchatt.R;
 import com.midterm.appchatt.databinding.MainMessageBinding;
 import com.midterm.appchatt.model.Chat;
+import com.midterm.appchatt.model.Contact;
 import com.midterm.appchatt.model.ThemeType;
 import com.midterm.appchatt.model.User;
 import com.midterm.appchatt.databinding.ActivityMainBinding;
 import com.midterm.appchatt.ui.adapter.UserAdapter;
+import com.midterm.appchatt.ui.viewmodel.ContactViewModel;
 import com.midterm.appchatt.ui.viewmodel.MainViewModel;
 import com.midterm.appchatt.utils.NavbarSupport;
 
@@ -39,7 +41,8 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
     private FirebaseAuth mAuth;
     private User currentUser;
     private List<User> userList;
-
+    private ContactViewModel contactViewModel;
+    private List<Contact> contacts;
     // Cho truy cap ham logout tu MainSetting.java
     private static MainActivity _instance;
 
@@ -59,8 +62,22 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
 
         NavbarSupport.setup(this, binding.navbarView);
         _instance = this;
+        contactViewModel = new ViewModelProvider(this).get(ContactViewModel.class);
+        addNewContact("SHKpZxCLtDOuK4hIxCIRUDoq0kx2","Yen Nhi","yennhi@gmail.com");
+        fetchContacts();
     }
-
+    private void fetchContacts() {
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        contactViewModel.getContactsForUser(currentUserId).observe(this, contacts -> {
+            this.contacts = contacts;
+            // Update UI with the list of contacts
+        });
+    }
+    public void addNewContact(String contactId, String displayName, String email) {
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Contact newContact = new Contact(currentUserId, contactId, displayName, email);
+        contactViewModel.addContact(newContact);
+    }
     private void setupAuth() {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
@@ -95,14 +112,25 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
     private void observeData() {
         viewModel.getUsers().observe(this, users -> {
             binding.progressBar.setVisibility(View.GONE);
-            // Filter out current user from the list
-            users.removeIf(user -> user.getUserId().equals(currentUser.getUserId()));
-            adapter.submitList(users);
-            userList = users;
+
+            // Lấy danh sách liên hệ
+            contactViewModel.getContacts().observe(this, contacts -> {
+                // Lọc người dùng có trong danh sách liên hệ
+                List<User> filteredUsers = new ArrayList<>();
+                for (User user : users) {
+                    for (Contact contact : contacts) {
+                        if (user.getUserId().equals(contact.getContactId())) {
+                            filteredUsers.add(user);
+                            break;
+                        }
+                    }
+                }
+
+                adapter.submitList(filteredUsers);
+            });
         });
 
         viewModel.getError().observe(this, error -> {
-            // Show error message
             binding.textError.setVisibility(View.VISIBLE);
             binding.textError.setText(error);
         });
