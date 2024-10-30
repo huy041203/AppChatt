@@ -36,7 +36,8 @@
             android:exported="false" />
         <activity android:name=".ui.activity.MainContact"
             android:exported="false" />
-
+        <activity android:name=".ui.activity.SignUpActivity"
+            android:exported="false" />
 
     </application>
 
