@@ -107,9 +107,7 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
         viewModel.getUsers().observe(this, users -> {
             binding.progressBar.setVisibility(View.GONE);
 
-            // Lấy danh sách liên hệ
-            contactViewModel.getContacts().observe(this, contacts -> {
-                // Lọc người dùng có trong danh sách liên hệ
+            contactViewModel.getContactsForUser(currentUser.getUserId()).observe(this, contacts -> {
                 List<User> filteredUsers = new ArrayList<>();
                 for (User user : users) {
                     for (Contact contact : contacts) {
