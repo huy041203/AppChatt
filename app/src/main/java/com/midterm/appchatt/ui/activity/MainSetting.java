@@ -50,15 +50,6 @@ public class MainSetting extends AppliedThemeActivity {
         });
 
 
-        binding.settingLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Add logging out action here.
-                MainActivity.get_instance().logout();
-            }
-        });
-
-
         NavbarSupport.setup(this, binding.navbarView);
     }
 

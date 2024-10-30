@@ -63,21 +63,15 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
         NavbarSupport.setup(this, binding.navbarView);
         _instance = this;
         contactViewModel = new ViewModelProvider(this).get(ContactViewModel.class);
-        addNewContact("SHKpZxCLtDOuK4hIxCIRUDoq0kx2","Yen Nhi","yennhi@gmail.com");
         fetchContacts();
     }
     private void fetchContacts() {
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         contactViewModel.getContactsForUser(currentUserId).observe(this, contacts -> {
             this.contacts = contacts;
-            // Update UI with the list of contacts
         });
     }
-    public void addNewContact(String contactId, String displayName, String email) {
-        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Contact newContact = new Contact(currentUserId, contactId, displayName, email);
-        contactViewModel.addContact(newContact);
-    }
+
     private void setupAuth() {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
@@ -159,23 +153,6 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_logout) {
-            logout();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    void logout() {
-        // Update user status to offline before logging out
-        viewModel.updateUserStatus(currentUser.getUserId(), "offline");
-        mAuth.signOut();
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
     }
 
     @Override
