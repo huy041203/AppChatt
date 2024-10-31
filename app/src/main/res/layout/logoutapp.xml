@@ -3,18 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_background">
+    android:background="@color/colorPrimaryVariant">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:gravity="center"
-        android:padding="16dp"
         android:orientation="vertical">
         <ImageView
             android:layout_width="160dp"
             android:layout_height="160dp"
-            android:src="@drawable/icon_account_circle" />
+            android:src="@drawable/applogo" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:layout_marginTop="20dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,12 +68,12 @@
                 android:inputType="textPersonName"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
-                android:padding="8dp"/>
+                android:padding="8dp"
+                android:background="@drawable/input_background"/>
 
             <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="16dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:src="@drawable/baseline_person_24" />
         </LinearLayout>
@@ -75,6 +82,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
+
             >
 
             <EditText
@@ -85,12 +93,12 @@
                 android:layout_weight="1"
                 android:textSize="23sp"
                 android:inputType="textEmailAddress"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="20dp"
+                android:background="@drawable/input_background"/>
 
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:src="@drawable/baseline_email_24" />
         </LinearLayout>
@@ -104,6 +112,7 @@
             >
 
             <EditText
+                android:background="@drawable/input_background"
                 android:id="@+id/edt_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -119,7 +128,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginStart="16dp"
+
                 android:src="@drawable/password" />
         </LinearLayout>
 
@@ -132,6 +141,7 @@
             >
 
             <EditText
+                android:background="@drawable/input_background"
                 android:id="@+id/edt_confirm_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -146,7 +156,6 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginStart="16dp"
                 android:src="@drawable/password" />
         </LinearLayout>
 
@@ -159,13 +168,13 @@
             android:text="Sign Up"
             android:textSize="20sp"
             android:backgroundTint="#F7945E"
-            android:layout_marginTop="30dp"/>
+            android:layout_marginTop="20dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:layout_marginTop="30dp">
+            >
 
             <ImageView
                 android:layout_width="60dp"
@@ -178,7 +187,7 @@
                 android:layout_margin="16dp"
                 android:src="@drawable/google"></ImageView>
         </LinearLayout>
-
+    </LinearLayout>
     </LinearLayout>
 
 
