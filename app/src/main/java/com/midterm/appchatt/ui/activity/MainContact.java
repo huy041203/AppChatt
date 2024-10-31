@@ -28,7 +28,8 @@ import com.midterm.appchatt.ui.viewmodel.ContactViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainContact extends AppliedThemeActivity {
+public class MainContact extends AppliedThemeActivity implements
+        ContactAdapter.OnUserClickListener {
 
     private MainContactBinding binding;
     private List<Contact> contactList;
@@ -113,7 +114,7 @@ public class MainContact extends AppliedThemeActivity {
     }
     private void setupRecyclerView() {
         contactList = new ArrayList<>();
-        adapter = new ContactAdapter(contactList);
+        adapter = new ContactAdapter(contactList, this);
         binding.rvList.setAdapter(adapter);
         binding.rvList.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -169,5 +170,13 @@ public class MainContact extends AppliedThemeActivity {
             public void afterTextChanged(Editable editable) {
             }
         });
+    }
+
+    @Override
+    public void onUserClick(Contact contact) {
+        Intent intent = new Intent(this, UserDetailActivity.class);
+
+        intent.putExtra("name", contact.getDisplayName());
+        startActivity(intent);
     }
 }

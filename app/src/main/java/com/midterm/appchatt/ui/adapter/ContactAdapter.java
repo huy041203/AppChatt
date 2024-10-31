@@ -1,5 +1,6 @@
 package com.midterm.appchatt.ui.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,17 @@ import java.util.List;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
 
+    public interface OnUserClickListener {
+        public void onUserClick(Contact contact);
+    }
+
     private List<Contact> contactList;
     private List<Contact> backupContactList;
+    private OnUserClickListener listener;
 
-    public ContactAdapter(List<Contact> chatList) {
+    public ContactAdapter(List<Contact> chatList, OnUserClickListener listener) {
         this.contactList = chatList != null ? chatList : new ArrayList<>();
+        this.listener = listener;
     }
 
     @Override
@@ -38,7 +45,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     @Override
     public void onBindViewHolder(ContactViewHolder holder, int position) {
         Contact chat = contactList.get(position);
-        holder.bind(chat);
+        holder.bind(chat, listener);
         if (position + 1 == this.getItemCount()) {
             holder.toggleBottomSeparator(false);
         } else {
@@ -75,7 +82,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
             this.binding = binding;
         }
 
-        public void bind(Contact contact) {
+        public void bind(Contact contact, OnUserClickListener listener) {
             if (contact != null) {
                 String avatarUrl = contact.getAvatarUrl();
                 if (avatarUrl != null && !avatarUrl.isEmpty()) {
@@ -85,6 +92,13 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
                 String displayName = contact.getDisplayName();
                 binding.messageDisplayName.setText(displayName != null ? displayName : "");
             }
+
+            binding.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onUserClick(contact);
+                }
+            });
         }
 
         public void toggleBottomSeparator(boolean foo) {
