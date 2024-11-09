@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.midterm.appchatt.R;
 import com.midterm.appchatt.databinding.ItemChatBinding;
 import com.midterm.appchatt.model.Chat;
 
@@ -70,7 +72,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ContactViewHol
 
         public void bind(Chat chat) {
             if (!chat.getAvatarUrl().equals("")) {
-                // If there is an url of avatar...
+                Glide.with(binding.getRoot().getContext())
+                        .load(chat.getAvatarUrl())
+                        .placeholder(R.drawable.default_avatar) // Ảnh mặc định khi đang load
+                        .error(R.drawable.default_avatar) // Ảnh hiện khi load lỗi
+                        .circleCrop() // Cắt ảnh thành hình tròn
+                        .into(binding.avatar);
             }
             binding.lastMessageContent.setText(chat.getLastMessageContent());
             binding.messageDisplayName.setText(chat.getDisplayName());

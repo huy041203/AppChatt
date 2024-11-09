@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.midterm.appchatt.R;
+import com.midterm.appchatt.data.repository.AuthRepository;
 import com.midterm.appchatt.databinding.MainMessageBinding;
 import com.midterm.appchatt.model.Chat;
 import com.midterm.appchatt.model.Contact;
@@ -40,12 +41,13 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
     public UserAdapter adapter;
     private FirebaseAuth mAuth;
     private User currentUser;
-    private List<User> userList;
+    private List<User> userList = new ArrayList<>();
     private ContactViewModel contactViewModel;
     private List<Contact> contacts;
+    private List<User> filteredList = new ArrayList<>();
     // Cho truy cap ham logout tu MainSetting.java
     private static MainActivity _instance;
-
+    private AuthRepository authRepository = new AuthRepository();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +69,7 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
     }
     private void fetchContacts() {
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        authRepository.loadUserData(currentUserId);
         contactViewModel.getContactsForUser(currentUserId).observe(this, contacts -> {
             this.contacts = contacts;
         });
@@ -172,19 +175,9 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() == 0) {
-                    adapter.submitList(userList);
-                }
-
-                List<User> filteredList = new ArrayList<>();
-                for (User user : userList) {
-                    if (user.getDisplayName().toLowerCase()
-                            .contains(charSequence.toString().toLowerCase())) {
-                        filteredList.add(user);
-                    }
-                }
-                adapter.submitList(filteredList);
+                filterUsers(charSequence.toString());
             }
+
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -195,5 +188,27 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
 
     public static MainActivity get_instance() {
         return _instance;
+    }
+    private void filterUsers(String query) {
+        if (userList == null) {
+            return; // Guard against null list
+        }
+
+        if (query.isEmpty()) {
+            adapter.submitList(new ArrayList<>(userList));
+            return;
+        }
+
+        filteredList.clear();
+        String lowercaseQuery = query.toLowerCase().trim();
+
+        for (User user : userList) {
+            if (user.getDisplayName() != null &&
+                    user.getDisplayName().toLowerCase().contains(lowercaseQuery)) {
+                filteredList.add(user);
+            }
+        }
+
+        adapter.submitList(new ArrayList<>(filteredList));
     }
 }

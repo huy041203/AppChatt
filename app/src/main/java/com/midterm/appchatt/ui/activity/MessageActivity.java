@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
+import com.midterm.appchatt.R;
 import com.midterm.appchatt.model.Message;
 import com.midterm.appchatt.model.User;
 import com.midterm.appchatt.ui.adapter.MessageAdapter;
@@ -27,6 +28,7 @@ public class MessageActivity extends AppliedThemeActivity {
     private User currentUser;
     private String chatId;
     private User otherUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +51,8 @@ public class MessageActivity extends AppliedThemeActivity {
     }
 
     private void setupToolbar() {
-        setSupportActionBar(binding.toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        binding.toolbar.setNavigationOnClickListener(v -> finish());
+        binding.toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
 
         binding.tvName.setText(otherUser.getName());
         Glide.with(this)

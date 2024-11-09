@@ -52,4 +52,27 @@ public class AuthRepository {
     public LiveData<String> getErrorMessage() {
         return errorMessage;
     }
+    public void loadUserData(String userId) {
+        authHelper.loadUserData(userId, new FirebaseAuthHelper.OnUserDataListener() {
+            @Override
+            public void onSuccess(User user) {
+                currentUser.setValue(user);
+            }
+
+            @Override
+            public void onFailure(Exception exception) {
+                errorMessage.setValue(exception.getMessage());
+            }
+        });
+    }
+
+    public void updateUserAvatar(String userId, String avatarUrl) {
+        authHelper.updateUserAvatar(userId, avatarUrl);
+        // Cập nhật lại currentUser với avatar mới
+        User currentUserValue = currentUser.getValue();
+        if (currentUserValue != null) {
+            currentUserValue.setAvatarUrl(avatarUrl);
+            currentUser.setValue(currentUserValue);
+        }
+    }
 }
