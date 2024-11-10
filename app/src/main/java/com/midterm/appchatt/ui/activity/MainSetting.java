@@ -4,16 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.midterm.appchatt.R;
+import com.midterm.appchatt.data.firebase.FirebaseAuthHelper;
 import com.midterm.appchatt.databinding.AccountSettingsBinding;
 import com.midterm.appchatt.databinding.MainSettingBinding;
 import com.midterm.appchatt.model.ThemeType;
 import com.midterm.appchatt.utils.NavbarSupport;
 import com.midterm.appchatt.utils.ThemeToggler;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainSetting extends AppliedThemeActivity {
 
@@ -49,6 +53,13 @@ public class MainSetting extends AppliedThemeActivity {
             }
         });
 
+        binding.settingLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
+
 
         NavbarSupport.setup(this, binding.navbarView);
     }
@@ -60,5 +71,14 @@ public class MainSetting extends AppliedThemeActivity {
                 setContentView(binding.getRoot());
             }
         });
+    }
+
+    private void logout() {
+        FirebaseAuth.getInstance().signOut();
+
+        Intent intent = new Intent(MainSetting.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }

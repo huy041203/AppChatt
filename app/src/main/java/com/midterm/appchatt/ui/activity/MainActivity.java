@@ -1,30 +1,22 @@
 package com.midterm.appchatt.ui.activity;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.content.Intent;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.midterm.appchatt.R;
 import com.midterm.appchatt.data.repository.AuthRepository;
 import com.midterm.appchatt.databinding.MainMessageBinding;
-import com.midterm.appchatt.model.Chat;
 import com.midterm.appchatt.model.Contact;
-import com.midterm.appchatt.model.ThemeType;
 import com.midterm.appchatt.model.User;
 import com.midterm.appchatt.databinding.ActivityMainBinding;
 import com.midterm.appchatt.ui.adapter.UserAdapter;
@@ -45,8 +37,6 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
     private ContactViewModel contactViewModel;
     private List<Contact> contacts;
     private List<User> filteredList = new ArrayList<>();
-    // Cho truy cap ham logout tu MainSetting.java
-    private static MainActivity _instance;
     private AuthRepository authRepository = new AuthRepository();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +53,6 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
         configSearchBar();
 
         NavbarSupport.setup(this, binding.navbarView);
-        _instance = this;
         contactViewModel = new ViewModelProvider(this).get(ContactViewModel.class);
         fetchContacts();
     }
@@ -186,9 +175,6 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
         });
     }
 
-    public static MainActivity get_instance() {
-        return _instance;
-    }
     private void filterUsers(String query) {
         if (userList == null) {
             return; // Guard against null list

@@ -1,8 +1,6 @@
 package com.midterm.appchatt.utils;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -13,11 +11,7 @@ import com.midterm.appchatt.databinding.MainContactBinding;
 import com.midterm.appchatt.databinding.NavbarBinding;
 import com.midterm.appchatt.ui.activity.MainActivity;
 import com.midterm.appchatt.ui.activity.MainContact;
-import com.midterm.appchatt.ui.activity.MainMessage;
 import com.midterm.appchatt.ui.activity.MainSetting;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class NavbarSupport {
 
