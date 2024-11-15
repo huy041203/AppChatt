@@ -5,6 +5,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.midterm.appchatt.data.firebase.FirebaseAuthHelper;
 import com.midterm.appchatt.model.User;
+import com.midterm.appchatt.utils.NoUserFoundException;
+import com.midterm.appchatt.utils.RetrivingDataException;
+import com.midterm.appchatt.utils.UpdatingEmailException;
 
 public class AuthRepository {
     private final FirebaseAuthHelper authHelper;
@@ -74,5 +77,21 @@ public class AuthRepository {
             currentUserValue.setAvatarUrl(avatarUrl);
             currentUser.setValue(currentUserValue);
         }
+    }
+
+    public void updateUserDisplayName(String displayName) {
+        authHelper.updateUserDisplayName(displayName);
+    }
+
+    public void updateUserEmail(String email, FirebaseAuthHelper.OnUpdateEmailListener listener) {
+        authHelper.updateUserEmail(email, listener);
+    }
+
+    public void updateUserPassword(String password) {
+        authHelper.updateUserPassword(password);
+    }
+
+    public void retriveUserData(FirebaseAuthHelper.UserDataCallback callback) {
+        authHelper.retrieveUserData(callback);
     }
 }
