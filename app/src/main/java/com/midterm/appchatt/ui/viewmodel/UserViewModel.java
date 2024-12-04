@@ -55,4 +55,27 @@ public class UserViewModel extends ViewModel {
 
         return userLiveData;
     }
+
+    public LiveData<User> getUserById(String userId) {
+        MutableLiveData<User> userLiveData = new MutableLiveData<>();
+        
+        database.child("users").child(userId)
+            .addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    User user = snapshot.getValue(User.class);
+                    if (user != null) {
+                        user.setUserId(snapshot.getKey());
+                    }
+                    userLiveData.setValue(user);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    userLiveData.setValue(null);
+                }
+            });
+        
+        return userLiveData;
+    }
 }

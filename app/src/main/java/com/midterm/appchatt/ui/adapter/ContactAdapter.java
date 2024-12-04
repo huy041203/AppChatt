@@ -1,15 +1,20 @@
 package com.midterm.appchatt.ui.adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import com.midterm.appchatt.databinding.ItemContactBinding;
+import com.bumptech.glide.Glide;
+import com.midterm.appchatt.R;
 import com.midterm.appchatt.model.Contact;
 
 import java.util.ArrayList;
@@ -21,96 +26,85 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         public void onUserClick(Contact contact);
     }
 
-    private List<Contact> contactList;
-    private List<Contact> backupContactList;
-    private OnUserClickListener listener;
-
-    public ContactAdapter(List<Contact> chatList, OnUserClickListener listener) {
-        this.contactList = chatList != null ? chatList : new ArrayList<>();
-        this.listener = listener;
+    public interface OnContactDeleteListener {
+        void onContactDelete(Contact contact);
     }
 
-    @Override
-    public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        return new ContactViewHolder(ItemContactBinding.inflate(layoutInflater, parent, false));
+    private List<Contact> contacts;
+    private OnUserClickListener clickListener;
+    private OnContactDeleteListener deleteListener;
+
+    public void setOnContactDeleteListener(OnContactDeleteListener listener) {
+        this.deleteListener = listener;
     }
 
-    public void updateList(List<Contact> newList) {
-        this.contactList = newList != null ? newList : new ArrayList<>();
-        notifyDataSetChanged();
+    public ContactAdapter(List<Contact> contacts, OnUserClickListener listener) {
+        this.contacts = contacts;
+        this.clickListener = listener;
     }
 
     @NonNull
     @Override
-    public void onBindViewHolder(ContactViewHolder holder, int position) {
-        Contact chat = contactList.get(position);
-        holder.bind(chat, listener);
-        if (position + 1 == this.getItemCount()) {
-            holder.toggleBottomSeparator(false);
-        } else {
-            holder.toggleBottomSeparator(true);
-        }
-        if (position == 0) {
-            holder.showMarginTopForFirstItem();
-        }
+    public ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_contact, parent, false);
+        return new ContactViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
+        Contact contact = contacts.get(position);
+        holder.bind(contact);
     }
 
     @Override
     public int getItemCount() {
-        return contactList.size();
+        return contacts.size();
     }
 
-    public void notifyThereIsAFilteringAction(List<Contact> tempContactList) {
-        this.backupContactList = this.contactList;
-        this.contactList = tempContactList != null ? tempContactList : new ArrayList<>();
-        notifyDataSetChanged();
-    }
+    public class ContactViewHolder extends RecyclerView.ViewHolder {
+        private final TextView tvName;
+        private final ImageView imgAvatar;
 
-    public void finalizeFilteringAction() {
-        if (this.backupContactList != null) {
-            this.contactList = backupContactList;
-            notifyDataSetChanged();
-        }
-    }
+        public ContactViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvName = itemView.findViewById(R.id.tv_name);
+            imgAvatar = itemView.findViewById(R.id.img_avatar);
 
-    public static class ContactViewHolder extends RecyclerView.ViewHolder {
-        private final ItemContactBinding binding;
-
-        public ContactViewHolder(ItemContactBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
-        }
-
-        public void bind(Contact contact, OnUserClickListener listener) {
-            if (contact != null) {
-                String avatarUrl = contact.getAvatarUrl();
-                if (avatarUrl != null && !avatarUrl.isEmpty()) {
-                    // If there is an url of avatar...
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION && clickListener != null) {
+                    clickListener.onUserClick(contacts.get(position));
                 }
+            });
 
-                String displayName = contact.getDisplayName();
-                binding.messageDisplayName.setText(displayName != null ? displayName : "");
-            }
-
-            binding.getRoot().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onUserClick(contact);
+            itemView.setOnLongClickListener(v -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION && deleteListener != null) {
+                    deleteListener.onContactDelete(contacts.get(position));
                 }
+                return true;
             });
         }
 
-        public void toggleBottomSeparator(boolean foo) {
-            if (binding != null && binding.chatSeparator != null) {
-                binding.chatSeparator.setVisibility(foo ? View.VISIBLE : View.GONE);
+        public void bind(Contact contact) {
+            if (tvName != null) {
+                tvName.setText(contact.getDisplayName());
+            }
+            
+            if (imgAvatar != null && contact.getAvatarUrl() != null && !contact.getAvatarUrl().isEmpty()) {
+                Glide.with(itemView.getContext())
+                        .load(contact.getAvatarUrl())
+                        .placeholder(R.drawable.default_avatar)
+                        .into(imgAvatar);
+            } else if (imgAvatar != null) {
+                imgAvatar.setImageResource(R.drawable.default_avatar);
             }
         }
+    }
 
-        public void showMarginTopForFirstItem() {
-            if (binding != null && binding.firstElementMargin != null) {
-                binding.firstElementMargin.setVisibility(View.VISIBLE);
-            }
-        }
+    public void updateList(List<Contact> newContacts) {
+        this.contacts = newContacts;
+        notifyDataSetChanged();
     }
 }

@@ -86,35 +86,61 @@ public class MainContact extends AppliedThemeActivity implements
         dialog.show();
     }
     private void findAndAddContact(String email, String name) {
+        String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        
+        if (email.equals(currentUserEmail)) {
+            Toast.makeText(this, "Không thể thêm email của chính bạn", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        userViewModel.findUserByEmail(email).observe(this, user -> {
-            if (user != null) {
-                String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                // Tạo contact mới với avatar URL từ user tìm được
-                Contact newContact = new Contact(
+        // Kiểm tra email đã tồn tại trong danh sách contact
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        contactViewModel.getContactsForUser(currentUserId).observe(this, contacts -> {
+            if (contacts != null) {
+                for (Contact contact : contacts) {
+                    // Sử dụng UserViewModel để lấy email của contact
+                    userViewModel.getUserById(contact.getContactId()).observe(this, user -> {
+                        if (user != null && user.getEmail().equals(email)) {
+                            Toast.makeText(this, "Liên hệ này đã tồn tại", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    });
+                }
+            }
+            
+            // Tiếp tục tìm và thêm contact
+            userViewModel.findUserByEmail(email).observe(this, user -> {
+                if (user != null) {
+                    Contact newContact = new Contact(
                         currentUserId,
                         user.getUserId(),
                         name,
-                        user.getAvatarUrl() // Sử dụng avatar của user tìm được
-                );
-
-                // Thêm contact mới
-                contactViewModel.addContact(newContact);
-
-                Toast.makeText(this, "Contact added successfully", Toast.LENGTH_SHORT).show();
-
-                // Refresh danh sách contact
-                fetchContacts();
-            } else {
-
-                Toast.makeText(this, "User not found with this email",
+                        user.getAvatarUrl()
+                    );
+                    contactViewModel.addContact(newContact);
+                    Toast.makeText(this, "Thêm liên hệ thành công", Toast.LENGTH_SHORT).show();
+                    fetchContacts();
+                } else {
+                    Toast.makeText(this, "Không tìm thấy người dùng với email này", 
                         Toast.LENGTH_SHORT).show();
-            }
+                }
+            });
         });
     }
     private void setupRecyclerView() {
         contactList = new ArrayList<>();
         adapter = new ContactAdapter(contactList, this);
+        adapter.setOnContactDeleteListener(contact -> {
+            new AlertDialog.Builder(this)
+                .setTitle("Xóa liên hệ")
+                .setMessage("Bạn có chắc chắn muốn xóa liên hệ này?")
+                .setPositiveButton("Xóa", (dialog, which) -> {
+                    contactViewModel.deleteContact(contact);
+                    // Contact list sẽ tự động cập nhật thông qua LiveData
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
+        });
         binding.rvList.setAdapter(adapter);
         binding.rvList.setLayoutManager(new LinearLayoutManager(this));
     }
