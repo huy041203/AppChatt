@@ -1,5 +1,6 @@
 package com.midterm.appchatt.ui.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,9 @@ import com.bumptech.glide.Glide;
 import com.midterm.appchatt.R;
 import com.midterm.appchatt.databinding.ItemUserBinding;
 import com.midterm.appchatt.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserAdapter extends ListAdapter<User, UserAdapter.UserViewHolder> {
     private final OnUserClickListener listener;
@@ -51,18 +55,16 @@ public class UserAdapter extends ListAdapter<User, UserAdapter.UserViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        holder.bind(getItem(position));
-        if (position + 1 == this.getItemCount()) {
-            // If binding the last item, it will hide the separator for better
-            //          performance.
-            holder.toggleBottomSeparator(false);
-        } else {
-            // With other items, the separator is needed for sure.
-            holder.toggleBottomSeparator(true);
-        }
-        if (position == 0) {
-            holder.showMarginTopForFirstItem();
-        }
+        User user = getItem(position);
+        Log.d("UserAdapter", "Binding position " + position + " with user: " + 
+              (user != null ? user.getDisplayName() : "null"));
+        holder.bind(user);
+    }
+
+    @Override
+    public void submitList(List<User> list) {
+        Log.d("UserAdapter", "SubmitList called with size: " + (list != null ? list.size() : 0));
+        super.submitList(list != null ? new ArrayList<>(list) : null);
     }
 
     class UserViewHolder extends RecyclerView.ViewHolder {

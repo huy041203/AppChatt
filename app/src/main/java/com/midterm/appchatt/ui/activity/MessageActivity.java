@@ -6,12 +6,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.midterm.appchatt.R;
 import com.midterm.appchatt.model.Message;
 import com.midterm.appchatt.model.User;
@@ -24,17 +29,15 @@ import java.util.List;
 public class MessageActivity extends AppliedThemeActivity {
     private ActivityMessageBinding binding;
     private MessageViewModel viewModel;
-    private MessageAdapter adapter;
+    private MessageAdapter messageAdapter;
     private User currentUser;
     private String chatId;
     private User otherUser;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMessageBinding.inflate(getLayoutInflater());
-
         setContentView(binding.getRoot());
 
         viewModel = new ViewModelProvider(this).get(MessageViewModel.class);
@@ -45,7 +48,7 @@ public class MessageActivity extends AppliedThemeActivity {
         chatId = getIntent().getStringExtra("chatId");
 
         setupToolbar();
-        setupRecyclerView();
+        setupMessageAdapter();
         setupMessageInput();
         observeData();
     }
@@ -70,21 +73,27 @@ public class MessageActivity extends AppliedThemeActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupRecyclerView() {
-        adapter = new MessageAdapter(currentUser.getUserId());
-        binding.recyclerMessages.setAdapter(adapter);
+    private void setupMessageAdapter() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            Log.e("MessageActivity", "Current user is null");
+            return;
+        }
+
+        String currentUserId = currentUser.getUid();
+        Log.d("MessageActivity", "Setting up adapter with currentUserId: " + currentUserId);
+        
+        messageAdapter = new MessageAdapter(currentUserId);
         binding.recyclerMessages.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerMessages.setAdapter(messageAdapter);
     }
 
     private void setupMessageInput() {
         binding.btnSend.setOnClickListener(v -> {
             String content = binding.edtMessage.getText().toString().trim();
             if (!content.isEmpty()) {
-                Message message = new Message(
-                        currentUser.getUserId(),
-                        content,
-                        "text"
-                );
+                String senderId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                Message message = new Message(senderId, content, "text");
                 viewModel.sendMessage(chatId, message);
                 binding.edtMessage.setText("");
             }
@@ -95,8 +104,10 @@ public class MessageActivity extends AppliedThemeActivity {
 
     private void observeData() {
         viewModel.getMessages().observe(this, messages -> {
-            adapter.updateMessages((List<Message>) messages);
-            binding.recyclerMessages.scrollToPosition(messages.size() - 1);
+            if (messages != null) {
+                messageAdapter.setMessages(messages);
+                binding.recyclerMessages.scrollToPosition(messages.size() - 1);
+            }
         });
 
         viewModel.getUserStatus().observe(this, isOnline -> {

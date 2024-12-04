@@ -1,5 +1,6 @@
 package com.midterm.appchatt.ui.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,16 +24,23 @@ import java.util.Locale;
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
 
     private final String currentUserId;
-    private final List<Message> messages;
+    private List<Message> messages;
 
     public MessageAdapter(String currentUserId) {
-        this.currentUserId = currentUserId;
+        this.currentUserId = currentUserId != null ? currentUserId : "";
         this.messages = new ArrayList<>();
     }
 
-    public void updateMessages(List<Message> newMessages) {
-        messages.clear();
-        messages.addAll(newMessages);
+    public void setMessages(List<Message> newMessages) {
+        if (newMessages == null) {
+            Log.e("MessageAdapter", "Attempted to set null message list");
+            return;
+        }
+        Log.d("MessageAdapter", "Setting new messages: " + newMessages.size());
+        for (Message msg : newMessages) {
+            Log.d("MessageAdapter", "Message: " + msg.toString());
+        }
+        this.messages = newMessages;
         notifyDataSetChanged();
     }
 
@@ -77,32 +85,37 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         }
 
         public void bind(Message message) {
-            boolean isSender = message.getSenderId().equals(currentUserId);
+            String senderId = message.getSenderId();
+            if (senderId == null) {
+                Log.e("MessageAdapter", "SenderId is null for message: " + message);
+                return;
+            }
 
-            layoutSender.setVisibility(isSender ? View.VISIBLE : View.GONE);
-            layoutReceiver.setVisibility(isSender ? View.GONE : View.VISIBLE);
-
-            if (message.getType().equals("text")) {
-                if (isSender) {
+            if (senderId.equals(currentUserId)) {
+                layoutSender.setVisibility(View.VISIBLE);
+                layoutReceiver.setVisibility(View.GONE);
+                if (message.getType().equals("text")) {
                     imgMessageSend.setVisibility(View.GONE);
                     tvMessageSend.setVisibility(View.VISIBLE);
                     tvMessageSend.setText(message.getContent());
                     tvTimeSend.setText(formatTime(message.getTimestamp()));
-                } else {
-                    imgMessageReceive.setVisibility(View.GONE);
-                    tvMessageReceive.setVisibility(View.VISIBLE);
-                    tvMessageReceive.setText(message.getContent());
-                    tvTimeReceive.setText(formatTime(message.getTimestamp()));
-                }
-            } else if (message.getType().equals("image")) {
-                if (isSender) {
+                } else if (message.getType().equals("image")) {
                     imgMessageSend.setVisibility(View.VISIBLE);
                     tvMessageSend.setVisibility(View.GONE);
                     Glide.with(itemView.getContext())
                             .load(message.getContent())
                             .into(imgMessageSend);
                     tvTimeSend.setText(formatTime(message.getTimestamp()));
-                } else {
+                }
+            } else {
+                layoutSender.setVisibility(View.GONE);
+                layoutReceiver.setVisibility(View.VISIBLE);
+                if (message.getType().equals("text")) {
+                    imgMessageReceive.setVisibility(View.GONE);
+                    tvMessageReceive.setVisibility(View.VISIBLE);
+                    tvMessageReceive.setText(message.getContent());
+                    tvTimeReceive.setText(formatTime(message.getTimestamp()));
+                } else if (message.getType().equals("image")) {
                     imgMessageReceive.setVisibility(View.VISIBLE);
                     tvMessageReceive.setVisibility(View.GONE);
                     Glide.with(itemView.getContext())
@@ -113,7 +126,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             }
         }
 
-        private String formatTime(long timestamp) {
+        private String formatTime(Long timestamp) {
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
             return sdf.format(new Date(timestamp));
         }

@@ -9,18 +9,19 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @IgnoreExtraProperties
 public class Message implements Parcelable {
     private String messageId;
     private String senderId;
     private String content;
-    private String type;  // "text" or "image"
-    private long timestamp;
-    private boolean isRead;
+    private String type;
+    private Long timestamp;
 
-    // Required for Firebase
+    // Constructor mặc định cho Firebase
     public Message() {
+        this.timestamp = System.currentTimeMillis();
     }
 
     public Message(String senderId, String content, String type) {
@@ -28,11 +29,9 @@ public class Message implements Parcelable {
         this.content = content;
         this.type = type;
         this.timestamp = System.currentTimeMillis();
-        this.isRead = false;
     }
 
     // Getters and Setters
-    @Exclude
     public String getMessageId() {
         return messageId;
     }
@@ -65,20 +64,12 @@ public class Message implements Parcelable {
         this.type = type;
     }
 
-    public long getTimestamp() {
+    public Long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(long timestamp) {
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public boolean isRead() {
-        return isRead;
-    }
-
-    public void setRead(boolean read) {
-        isRead = read;
     }
 
     // Convert to Map for Firebase
@@ -89,28 +80,23 @@ public class Message implements Parcelable {
         result.put("content", content);
         result.put("type", type);
         result.put("timestamp", timestamp);
-        result.put("isRead", isRead);
         return result;
     }
 
     // Parcelable implementation
     protected Message(Parcel in) {
-        messageId = in.readString();
         senderId = in.readString();
         content = in.readString();
         type = in.readString();
         timestamp = in.readLong();
-        isRead = in.readByte() != 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(messageId);
         dest.writeString(senderId);
         dest.writeString(content);
         dest.writeString(type);
         dest.writeLong(timestamp);
-        dest.writeByte((byte) (isRead ? 1 : 0));
     }
 
     @Override
@@ -136,12 +122,12 @@ public class Message implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Message message = (Message) o;
-        return messageId != null && messageId.equals(message.messageId);
+        return senderId != null && senderId.equals(message.senderId);
     }
 
     @Override
     public int hashCode() {
-        return messageId != null ? messageId.hashCode() : 0;
+        return senderId != null ? senderId.hashCode() : 0;
     }
 
     // For debugging
@@ -149,12 +135,10 @@ public class Message implements Parcelable {
     @Override
     public String toString() {
         return "Message{" +
-                "messageId='" + messageId + '\'' +
-                ", senderId='" + senderId + '\'' +
+                "senderId='" + senderId + '\'' +
                 ", content='" + content + '\'' +
                 ", type='" + type + '\'' +
                 ", timestamp=" + timestamp +
-                ", isRead=" + isRead +
                 '}';
     }
 }

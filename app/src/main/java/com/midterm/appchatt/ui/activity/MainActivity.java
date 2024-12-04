@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.content.Intent;
@@ -60,6 +61,12 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         authRepository.loadUserData(currentUserId);
         contactViewModel.getContactsForUser(currentUserId).observe(this, contacts -> {
+            Log.d("MainActivity", "Contacts received: " + (contacts != null ? contacts.size() : "null"));
+            if (contacts == null || contacts.isEmpty()) {
+                Log.d("MainActivity", "No contacts found for user: " + currentUser.getUserId());
+                adapter.submitList(userList);
+                return;
+            }
             this.contacts = contacts;
         });
     }
@@ -96,10 +103,13 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
     }
 
     private void observeData() {
+        Log.d("MainActivity", "Start observing data");
         viewModel.getUsers().observe(this, users -> {
+            Log.d("MainActivity", "Users updated: " + (users != null ? users.size() : 0));
             binding.progressBar.setVisibility(View.GONE);
 
             contactViewModel.getContactsForUser(currentUser.getUserId()).observe(this, contacts -> {
+                Log.d("MainActivity", "Contacts updated: " + (contacts != null ? contacts.size() : 0));
                 List<User> filteredUsers = new ArrayList<>();
                 for (User user : users) {
                     for (Contact contact : contacts) {
@@ -109,12 +119,13 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
                         }
                     }
                 }
-
+                Log.d("MainActivity", "Filtered users: " + filteredUsers.size());
                 adapter.submitList(filteredUsers);
             });
         });
 
         viewModel.getError().observe(this, error -> {
+            Log.e("MainActivity", "Error: " + error);
             binding.textError.setVisibility(View.VISIBLE);
             binding.textError.setText(error);
         });

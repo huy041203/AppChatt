@@ -1,5 +1,7 @@
 package com.midterm.appchatt.ui.viewmodel;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -29,10 +31,12 @@ public class MainViewModel extends ViewModel {
     }
 
     private void loadUsers() {
+        Log.d("MainViewModel", "Loading users from database");
         database.getReference("users")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Log.d("MainViewModel", "User data changed, snapshot size: " + snapshot.getChildrenCount());
                         List<User> userList = new ArrayList<>();
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             User user = dataSnapshot.getValue(User.class);
@@ -40,11 +44,13 @@ public class MainViewModel extends ViewModel {
                                 userList.add(user);
                             }
                         }
+                        Log.d("MainViewModel", "Loaded users: " + userList.size());
                         users.setValue(userList);
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("MainViewModel", "Database error: " + error.getMessage());
                         MainViewModel.this.error.setValue(error.getMessage());
                     }
                 });
