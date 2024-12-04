@@ -25,6 +25,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     private final String currentUserId;
     private List<Message> messages;
+    private OnMessageLongClickListener longClickListener;
+
+    public interface OnMessageLongClickListener {
+        void onMessageLongClick(Message message);
+    }
+
+    public void setOnMessageLongClickListener(OnMessageLongClickListener listener) {
+        this.longClickListener = listener;
+    }
 
     public MessageAdapter(String currentUserId) {
         this.currentUserId = currentUserId != null ? currentUserId : "";
@@ -107,6 +116,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                             .into(imgMessageSend);
                     tvTimeSend.setText(formatTime(message.getTimestamp()));
                 }
+                layoutSender.setOnLongClickListener(v -> {
+                    if (longClickListener != null) {
+                        longClickListener.onMessageLongClick(message);
+                    }
+                    return true;
+                });
             } else {
                 layoutSender.setVisibility(View.GONE);
                 layoutReceiver.setVisibility(View.VISIBLE);
@@ -123,6 +138,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                             .into(imgMessageReceive);
                     tvTimeReceive.setText(formatTime(message.getTimestamp()));
                 }
+                layoutReceiver.setOnLongClickListener(v -> {
+                    if (longClickListener != null) {
+                        longClickListener.onMessageLongClick(message);
+                    }
+                    return true;
+                });
             }
         }
 

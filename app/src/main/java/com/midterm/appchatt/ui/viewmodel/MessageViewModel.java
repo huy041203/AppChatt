@@ -4,14 +4,16 @@ import android.net.Uri;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.midterm.appchatt.data.repository.MessageRepository;
 import com.midterm.appchatt.model.Message;
+
+import java.util.ArrayList;
 import java.util.List;
 import android.util.Log;
 import java.util.UUID;
-import java.util.ArrayList;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 public class MessageViewModel extends ViewModel {
     private final MessageRepository repository;

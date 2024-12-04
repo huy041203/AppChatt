@@ -86,6 +86,19 @@ public class MessageActivity extends AppliedThemeActivity {
         messageAdapter = new MessageAdapter(currentUserId);
         binding.recyclerMessages.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerMessages.setAdapter(messageAdapter);
+
+        messageAdapter.setOnMessageLongClickListener(message -> {
+            if (message.getSenderId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                new AlertDialog.Builder(this)
+                    .setTitle("Xóa tin nhắn")
+                    .setMessage("Bạn có chắc chắn muốn xóa tin nhắn này?")
+                    .setPositiveButton("Xóa", (dialog, which) -> {
+                        viewModel.deleteMessage(chatId, message.getMessageId());
+                    })
+                    .setNegativeButton("Hủy", null)
+                    .show();
+            }
+        });
     }
 
     private void setupMessageInput() {
