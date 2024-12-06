@@ -1,6 +1,8 @@
 package com.midterm.appchatt.data.repository;
 
 import android.net.Uri;
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.google.android.gms.tasks.Task;
@@ -10,6 +12,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -22,6 +26,7 @@ import java.util.UUID;
 public class MessageRepository {
     private final FirebaseDatabase database;
     private final FirebaseStorage storage;
+    private final FirebaseFirestore firestore;
     private final DatabaseReference messagesRef;
     private final DatabaseReference usersRef;
     private final List<ValueEventListener> activeListeners;
@@ -30,79 +35,68 @@ public class MessageRepository {
     public MessageRepository() {
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
+        firestore = FirebaseFirestore.getInstance();
         messagesRef = database.getReference("messages");
-        usersRef = database.getReference("users");
         activeListeners = new ArrayList<>();
         activeChildListeners = new ArrayList<>();
+        usersRef = database.getReference("users");
+    }
+
+    public void sendMessage(String chatId, Message message) {
+        String messageId = UUID.randomUUID().toString();
+        message.setMessageId(messageId);
+        
+        firestore.collection("chats")
+            .document(chatId)
+            .collection("messages")
+            .document(messageId)
+            .set(message)
+            .addOnSuccessListener(aVoid -> {
+                Log.d("MessageRepository", "Message sent successfully with ID: " + messageId);
+            })
+            .addOnFailureListener(e -> {
+                Log.e("MessageRepository", "Error sending message", e);
+            });
     }
 
     public LiveData<List<Message>> getMessages(String chatId) {
-        MutableLiveData<List<Message>> messages = new MutableLiveData<>(new ArrayList<>());
-
-        ChildEventListener messageListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
-                Message message = snapshot.getValue(Message.class);
-                if (message != null) {
-                    message.setMessageId(snapshot.getKey());
-                    List<Message> currentMessages = messages.getValue();
-                    currentMessages.add(message);
-                    messages.setValue(currentMessages);
+        MutableLiveData<List<Message>> messages = new MutableLiveData<>();
+        
+        firestore.collection("chats")
+            .document(chatId)
+            .collection("messages")
+            .orderBy("timestamp")
+            .addSnapshotListener((value, error) -> {
+                if (error != null) {
+                    Log.e("MessageRepository", "Error getting messages", error);
+                    return;
                 }
-            }
 
-            @Override
-            public void onChildChanged(DataSnapshot snapshot, String previousChildName) {
-                Message updatedMessage = snapshot.getValue(Message.class);
-                if (updatedMessage != null) {
-                    updatedMessage.setMessageId(snapshot.getKey());
-                    List<Message> currentMessages = messages.getValue();
-                    int index = findMessageIndex(currentMessages, snapshot.getKey());
-                    if (index != -1) {
-                        currentMessages.set(index, updatedMessage);
-                        messages.setValue(currentMessages);
+                List<Message> messageList = new ArrayList<>();
+                if (value != null) {
+                    for (DocumentSnapshot doc : value.getDocuments()) {
+                        Message message = doc.toObject(Message.class);
+                        if (message != null) {
+                            messageList.add(message);
+                        }
                     }
                 }
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot snapshot) {
-                List<Message> currentMessages = messages.getValue();
-                int index = findMessageIndex(currentMessages, snapshot.getKey());
-                if (index != -1) {
-                    currentMessages.remove(index);
-                    messages.setValue(currentMessages);
-                }
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot snapshot, String previousChildName) {
-                // Not needed for basic chat functionality
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Handle error
-            }
-        };
-
-        messagesRef.child(chatId).addChildEventListener(messageListener);
-        activeChildListeners.add(messageListener);
+                messages.setValue(messageList);
+            });
 
         return messages;
     }
 
-    public void sendMessage(String chatId, Message message) {
-        String messageId = messagesRef.child(chatId).push().getKey();
-        if (messageId != null) {
-            message.setMessageId(messageId);
-            message.setTimestamp(System.currentTimeMillis());
-            messagesRef.child(chatId).child(messageId).setValue(message);
-        }
-    }
-
     public void deleteMessage(String chatId, String messageId) {
-        messagesRef.child(chatId).child(messageId).removeValue();
+        firestore.collection("chats")
+            .document(chatId)
+            .collection("messages")
+            .document(messageId)
+            .delete()
+            .addOnSuccessListener(aVoid -> 
+                Log.d("MessageRepository", "Message successfully deleted"))
+            .addOnFailureListener(e -> 
+                Log.e("MessageRepository", "Error deleting message", e));
     }
 
     public void updateMessageStatus(String chatId, String messageId, boolean isRead) {
