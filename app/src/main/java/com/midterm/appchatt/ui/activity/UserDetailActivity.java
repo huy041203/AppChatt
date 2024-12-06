@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.midterm.appchatt.databinding.UserDetailBinding;
+import com.midterm.appchatt.model.User;
 
 public class UserDetailActivity extends AppliedThemeActivity {
 
@@ -19,9 +20,14 @@ public class UserDetailActivity extends AppliedThemeActivity {
         binding = UserDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        String name = getIntent().getStringExtra("name");
+        User currentUser = getIntent().getParcelableExtra("currentUser");
+        User user = getIntent().getParcelableExtra("user");
 
-        binding.tvName.setText(name);
+        try {
+            binding.tvName.setText(user.getDisplayName());
+        } catch (NullPointerException e) {
+            binding.tvName.setText("NO_NAME");
+        }
 
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,14 +39,13 @@ public class UserDetailActivity extends AppliedThemeActivity {
         binding.sendMsgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //
-            }
-        });
+                String chatId = MainActivity.generateChatId(currentUser.getUserId(), user.getUserId());
 
-        binding.sendFriendRequestBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //
+                Intent intent = new Intent(UserDetailActivity.this, MessageActivity.class);
+                intent.putExtra("currentUser", currentUser);
+                intent.putExtra("otherUser", user);
+                intent.putExtra("chatId", chatId);
+                startActivity(intent);
             }
         });
     }

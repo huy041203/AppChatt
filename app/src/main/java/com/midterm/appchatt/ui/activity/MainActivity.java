@@ -143,7 +143,7 @@ public class MainActivity extends AppliedThemeActivity implements UserAdapter.On
         startActivity(intent);
     }
 
-    private String generateChatId(String userId1, String userId2) {
+    public static String generateChatId(String userId1, String userId2) {
         // Always use the same order to generate chat ID
         return userId1.compareTo(userId2) < 0
                 ? userId1 + "_" + userId2

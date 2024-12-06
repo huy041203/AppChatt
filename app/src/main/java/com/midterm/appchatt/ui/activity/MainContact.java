@@ -17,10 +17,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.midterm.appchatt.R;
+import com.midterm.appchatt.data.repository.AuthRepository;
+import com.midterm.appchatt.model.User;
 import com.midterm.appchatt.ui.adapter.ContactAdapter;
 import com.midterm.appchatt.databinding.MainContactBinding;
 import com.midterm.appchatt.model.Contact;
+import com.midterm.appchatt.ui.viewmodel.AuthViewModel;
 import com.midterm.appchatt.ui.viewmodel.UserViewModel;
 import com.midterm.appchatt.utils.NavbarSupport;
 import com.midterm.appchatt.ui.viewmodel.ContactViewModel;
@@ -36,6 +40,9 @@ public class MainContact extends AppliedThemeActivity implements
     private ContactAdapter adapter;
     private ContactViewModel contactViewModel;
     private UserViewModel userViewModel;
+
+    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -201,8 +208,23 @@ public class MainContact extends AppliedThemeActivity implements
     @Override
     public void onUserClick(Contact contact) {
         Intent intent = new Intent(this, UserDetailActivity.class);
+        User user = new User(contact.getContactId(), "", contact.getDisplayName());
+        FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+        User currentUser = null;
+        if (fUser != null) {
+            currentUser = new User(
+                    fUser.getUid(),
+                    fUser.getEmail(),
+                    fUser.getDisplayName()
+            );
+        }
+        if (user == null || currentUser == null) {
+            return;
+        }
 
-        intent.putExtra("name", contact.getDisplayName());
+        intent.putExtra("currentUser", currentUser);
+        intent.putExtra("user", user);
+
         startActivity(intent);
     }
 }

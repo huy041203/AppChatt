@@ -49,6 +49,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             if (validateInput(username, email, password, confirmPassword)) {
                 authViewModel.registerUser(email, password, username);
+                authViewModel.loginUser(email, password);
             }
         });
         backButton.setOnClickListener(v -> {
