@@ -10,7 +10,7 @@ public class User implements Parcelable {
     private String avatarUrl;
     private String status;  // online/offline
     private long lastActive;
-    private String userName;
+
 
     // Constructor mặc định cho Firebase
     public User() {}
@@ -73,7 +73,7 @@ public class User implements Parcelable {
 
 
     public String getName() {
-    return  userName;}
+    return  displayName;}
     protected User(Parcel in) {
         userId = in.readString();
         email = in.readString();
@@ -81,7 +81,7 @@ public class User implements Parcelable {
         avatarUrl = in.readString();
         status = in.readString();
         lastActive = in.readLong();
-        userName = in.readString();
+
     }
 
     @Override
@@ -92,7 +92,7 @@ public class User implements Parcelable {
         dest.writeString(avatarUrl);
         dest.writeString(status);
         dest.writeLong(lastActive);
-        dest.writeString(userName);
+
     }
 
     @Override
