@@ -20,12 +20,14 @@ public class MessageViewModel extends ViewModel {
     private MutableLiveData<List<Message>> messages;
     private MutableLiveData<Message> lastMessage;
     private MutableLiveData<Boolean> userStatus;
+    private MutableLiveData<Long> lastActive;
 
     public MessageViewModel() {
         repository = new MessageRepository();
         messages = new MutableLiveData<>();
         lastMessage = new MutableLiveData<>();
         userStatus = new MutableLiveData<>();
+        lastActive = new MutableLiveData<>();
     }
 
     public LiveData<List<Message>> getMessages() {
@@ -67,10 +69,18 @@ public class MessageViewModel extends ViewModel {
     }
 
     public LiveData<Boolean> getUserStatus() {
-        if (userStatus == null) {
-            userStatus = new MutableLiveData<>();
-        }
         return userStatus;
+    }
+
+    public LiveData<Long> getLastActive() {
+        return lastActive;
+    }
+
+    public void observeUserStatus(String userId) {
+        repository.observeUserStatus(userId, (status, lastActiveTime) -> {
+            userStatus.setValue(status.equals("online"));
+            lastActive.setValue(lastActiveTime);
+        });
     }
 
     public void sendImage(String chatId, Uri imageUri, String senderId) {
@@ -81,12 +91,6 @@ public class MessageViewModel extends ViewModel {
                     "image"
             );
             sendMessage(chatId, message);
-        });
-    }
-
-    public void observeUserStatus(String userId) {
-        repository.observeUserStatus(userId, isOnline -> {
-            userStatus.setValue(isOnline);
         });
     }
 

@@ -23,6 +23,7 @@ import com.midterm.appchatt.model.User;
 import com.midterm.appchatt.ui.adapter.MessageAdapter;
 import com.midterm.appchatt.ui.viewmodel.MessageViewModel;
 import com.midterm.appchatt.databinding.ActivityMessageBinding;
+import com.midterm.appchatt.utils.DateUtils;
 
 import java.util.List;
 
@@ -123,12 +124,9 @@ public class MessageActivity extends AppliedThemeActivity {
             }
         });
 
-        viewModel.getUserStatus().observe(this, isOnline -> {
-            binding.tvStatus.setText(isOnline ? "Online" : "Offline");
-        });
+        observeUserStatus();
 
         viewModel.loadMessages(chatId);
-        viewModel.observeUserStatus(otherUser.getUserId());
     }
 
     private void openImagePicker() {
@@ -150,4 +148,21 @@ public class MessageActivity extends AppliedThemeActivity {
     }
 
     private static final int REQUEST_IMAGE_PICKER = 100;
+
+    private void observeUserStatus() {
+        viewModel.observeUserStatus(otherUser.getUserId());
+        
+        viewModel.getUserStatus().observe(this, isOnline -> {
+            if (isOnline) {
+                binding.tvStatus.setText("Đang hoạt động");
+                binding.tvStatus.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+            } else {
+                viewModel.getLastActive().observe(this, lastActive -> {
+                    String lastActiveTime = DateUtils.getTimeAgo(lastActive);
+                    binding.tvStatus.setText("Hoạt động " + lastActiveTime);
+                    binding.tvStatus.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                });
+            }
+        });
+    }
 }

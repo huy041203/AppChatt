@@ -3,6 +3,7 @@ package com.midterm.appchatt.data.repository;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.google.android.gms.tasks.Task;
@@ -124,20 +125,25 @@ public class MessageRepository {
     }
 
     public void observeUserStatus(String userId, UserStatusCallback callback) {
+        DatabaseReference userRef = database.getReference("users").child(userId);
         ValueEventListener statusListener = new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                Boolean isOnline = snapshot.getValue(Boolean.class);
-                callback.onStatusChanged(isOnline != null && isOnline);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String status = snapshot.child("status").getValue(String.class);
+                    Long lastActive = snapshot.child("lastActive").getValue(Long.class);
+                    if (status != null && lastActive != null) {
+                        callback.onStatusChanged(status, lastActive);
+                    }
+                }
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                callback.onStatusChanged(false);
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("MessageRepository", "Error observing user status", error.toException());
             }
         };
-
-        usersRef.child(userId).child("online").addValueEventListener(statusListener);
+        userRef.addValueEventListener(statusListener);
         activeListeners.add(statusListener);
     }
 
@@ -163,7 +169,7 @@ public class MessageRepository {
     }
 
     public interface UserStatusCallback {
-        void onStatusChanged(boolean isOnline);
+        void onStatusChanged(String status, long lastActiveTime);
     }
 
     public LiveData<Message> getLastMessage(String chatId) {
