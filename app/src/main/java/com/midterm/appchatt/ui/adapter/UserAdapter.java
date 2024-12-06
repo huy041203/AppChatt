@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,12 +17,17 @@ import com.bumptech.glide.Glide;
 import com.midterm.appchatt.R;
 import com.midterm.appchatt.databinding.ItemUserBinding;
 import com.midterm.appchatt.model.User;
+import com.midterm.appchatt.ui.activity.MainActivity;
+import com.midterm.appchatt.ui.viewmodel.MessageViewModel;
+import com.midterm.appchatt.utils.DateUtils;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserAdapter extends ListAdapter<User, UserAdapter.UserViewHolder> {
     private final OnUserClickListener listener;
+    private final MessageViewModel messageViewModel;
 
     public interface OnUserClickListener {
         void onUserClick(User user);
@@ -43,6 +49,7 @@ public class UserAdapter extends ListAdapter<User, UserAdapter.UserViewHolder> {
             }
         });
         this.listener = listener;
+        this.messageViewModel = new MessageViewModel();
     }
 
     @NonNull
@@ -59,6 +66,30 @@ public class UserAdapter extends ListAdapter<User, UserAdapter.UserViewHolder> {
         Log.d("UserAdapter", "Binding position " + position + " with user: " + 
               (user != null ? user.getDisplayName() : "null"));
         holder.bind(user);
+
+        // Lấy chatId
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String chatId = MainActivity.generateChatId(currentUserId, user.getUserId());
+
+        // Observe last message
+        messageViewModel.getLastMessage(chatId).observe((LifecycleOwner) holder.itemView.getContext(), message -> {
+            if (message != null) {
+                // Hiển thị nội dung tin nhắn
+                String content = message.getType().equals("text") ? 
+                    message.getContent() : "[Hình ảnh]";
+                holder.tvLastMessage.setText(content);
+
+                // Sử dụng DateUtils mới
+                String timeAgo = DateUtils.getTimeAgo(message.getTimestamp());
+                holder.tvLastMessageTime.setText(timeAgo);
+
+                holder.tvLastMessage.setVisibility(View.VISIBLE);
+                holder.tvLastMessageTime.setVisibility(View.VISIBLE);
+            } else {
+                holder.tvLastMessage.setVisibility(View.GONE);
+                holder.tvLastMessageTime.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -74,6 +105,8 @@ public class UserAdapter extends ListAdapter<User, UserAdapter.UserViewHolder> {
         private final View statusIndicator;
         private final TextView tvLastActive;
         private final ItemUserBinding binding;
+        private final TextView tvLastMessage;
+        private final TextView tvLastMessageTime;
 
         public UserViewHolder(@NonNull ItemUserBinding binding) {
             super(binding.getRoot());
@@ -83,6 +116,8 @@ public class UserAdapter extends ListAdapter<User, UserAdapter.UserViewHolder> {
             tvEmail = binding.tvEmail;
             statusIndicator = binding.statusIndicator;
             tvLastActive = binding.tvLastActive;
+            tvLastMessage = binding.tvLastMessage;
+            tvLastMessageTime = binding.tvLastMessageTime;
 
             binding.container.setOnClickListener(v -> {
                 int position = getAbsoluteAdapterPosition();

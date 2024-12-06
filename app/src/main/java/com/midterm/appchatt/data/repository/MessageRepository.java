@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -163,5 +164,28 @@ public class MessageRepository {
 
     public interface UserStatusCallback {
         void onStatusChanged(boolean isOnline);
+    }
+
+    public LiveData<Message> getLastMessage(String chatId) {
+        MutableLiveData<Message> lastMessage = new MutableLiveData<>();
+        
+        firestore.collection("chats")
+            .document(chatId)
+            .collection("messages")
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .limit(1)
+            .addSnapshotListener((value, error) -> {
+                if (error != null) {
+                    Log.e("MessageRepository", "Error getting last message", error);
+                    return;
+                }
+
+                if (value != null && !value.isEmpty()) {
+                    Message message = value.getDocuments().get(0).toObject(Message.class);
+                    lastMessage.setValue(message);
+                }
+            });
+
+        return lastMessage;
     }
 }

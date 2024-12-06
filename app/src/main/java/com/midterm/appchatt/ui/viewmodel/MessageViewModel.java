@@ -18,11 +18,13 @@ import java.util.UUID;
 public class MessageViewModel extends ViewModel {
     private final MessageRepository repository;
     private MutableLiveData<List<Message>> messages;
+    private MutableLiveData<Message> lastMessage;
     private MutableLiveData<Boolean> userStatus;
 
     public MessageViewModel() {
         repository = new MessageRepository();
         messages = new MutableLiveData<>();
+        lastMessage = new MutableLiveData<>();
         userStatus = new MutableLiveData<>();
     }
 
@@ -33,15 +35,25 @@ public class MessageViewModel extends ViewModel {
         return messages;
     }
 
+    public LiveData<Message> getLastMessage(String chatId) {
+        if (lastMessage == null) {
+            lastMessage = new MutableLiveData<>();
+        }
+        return repository.getLastMessage(chatId);
+    }
+
     public void loadMessages(String chatId) {
-        repository.getMessages(chatId).observeForever(messageList -> 
-            messages.setValue(messageList));
+        repository.getMessages(chatId).observeForever(messageList -> {
+            messages.setValue(messageList);
+            if (messageList != null && !messageList.isEmpty()) {
+                lastMessage.setValue(messageList.get(messageList.size() - 1));
+            }
+        });
     }
 
     public void sendMessage(String chatId, Message message) {
-        if (isMessageValid(message)) {
-            repository.sendMessage(chatId, message);
-        }
+        repository.sendMessage(chatId, message);
+        lastMessage.setValue(message);
     }
 
     public void deleteMessage(String chatId, String messageId) {
