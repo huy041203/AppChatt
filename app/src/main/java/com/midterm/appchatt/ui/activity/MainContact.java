@@ -143,7 +143,9 @@ public class MainContact extends AppliedThemeActivity implements
                 .setMessage("Bạn có chắc chắn muốn xóa liên hệ này?")
                 .setPositiveButton("Xóa", (dialog, which) -> {
                     contactViewModel.deleteContact(contact);
-                    // Contact list sẽ tự động cập nhật thông qua LiveData
+                    String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    // Refresh lại danh sách sau khi xóa
+                    fetchContacts();
                 })
                 .setNegativeButton("Hủy", null)
                 .show();

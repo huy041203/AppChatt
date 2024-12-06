@@ -36,23 +36,16 @@ public class ContactViewModel extends ViewModel {
     }
 
     public void deleteContact(Contact contact) {
-        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        
-        db.collection("contacts")
-            .whereEqualTo("userId", currentUserId)
-            .whereEqualTo("contactId", contact.getContactId())
-            .get()
-            .addOnSuccessListener(querySnapshot -> {
-                for (DocumentSnapshot document : querySnapshot.getDocuments()) {
-                    document.getReference().delete()
-                        .addOnSuccessListener(aVoid -> {
-                            Log.d("ContactViewModel", "Contact deleted successfully");
-                            // Refresh contacts list thông qua repository
-                            contactRepository.getContactsForUser(currentUserId);
-                        })
-                        .addOnFailureListener(e -> 
-                            Log.e("ContactViewModel", "Error deleting contact", e));
-                }
-            });
+        contactRepository.deleteContact(contact, new ContactRepository.DeleteContactListener() {
+            @Override
+            public void onSuccess() {
+                Log.d("ContactViewModel", "Contact deleted successfully");
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("ContactViewModel", "Error deleting contact", e);
+            }
+        });
     }
 }
