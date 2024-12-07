@@ -13,12 +13,12 @@
         android:inputType="textEmailAddress"
         android:layout_marginBottom="16dp"/>
 
-    <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Display Name"
-        android:inputType="textPersonName"
-        android:layout_marginBottom="16dp"/>
+<!--    <EditText-->
+<!--        android:id="@+id/editTextName"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="Display Name"-->
+<!--        android:inputType="textPersonName"-->
+<!--        android:layout_marginBottom="16dp"/>-->
 
 </LinearLayout>

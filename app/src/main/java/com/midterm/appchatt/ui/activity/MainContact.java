@@ -5,14 +5,19 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -41,12 +46,19 @@ public class MainContact extends AppliedThemeActivity implements
     private ContactViewModel contactViewModel;
     private UserViewModel userViewModel;
 
+    private ActivityResultLauncher<Intent> launcher;
+    private final NickNameAdapter nickNameAdapter = new NickNameAdapter();
+    private ContactResultCallback contactResultCallback = null;
     
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+
+
+        initUserDetailIntentLauncher();
+
 
         binding = MainContactBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -57,6 +69,21 @@ public class MainContact extends AppliedThemeActivity implements
         fetchContacts();
         configSearchBar();
         NavbarSupport.setup(this, binding.navbarView);
+    }
+
+    private void initUserDetailIntentLauncher() {
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null) {
+                            nickNameAdapter.setNickname(data.getStringExtra("nickname"));
+                        }
+                        if (contactResultCallback != null) {
+                            contactResultCallback.onContactResult(nickNameAdapter);
+                        }
+                    }
+                });
     }
 
     private void setupViewModel() {
@@ -72,16 +99,14 @@ public class MainContact extends AppliedThemeActivity implements
         View dialogView = inflater.inflate(R.layout.dialog_add_contact, null);
 
         EditText emailInput = dialogView.findViewById(R.id.editTextEmail);
-        EditText nameInput = dialogView.findViewById(R.id.editTextName);
 
         builder.setView(dialogView)
                 .setTitle("Add New Contact")
-                .setPositiveButton("Add", (dialog, id) -> {
+                .setPositiveButton("Search", (dialog, id) -> {
                     String email = emailInput.getText().toString().trim();
-                    String name = nameInput.getText().toString().trim();
 
-                    if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(name)) {
-                        findAndAddContact(email, name);
+                    if (!TextUtils.isEmpty(email)) {
+                        findAndAddContact(email);
                     } else {
                         Toast.makeText(MainContact.this,
                                 "Please fill in all fields", Toast.LENGTH_SHORT).show();
@@ -92,48 +117,96 @@ public class MainContact extends AppliedThemeActivity implements
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-    private void findAndAddContact(String email, String name) {
-        String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        
+    private void findAndAddContact(String email) {
+        FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+        final User currentUser;
+        if (fUser != null) {
+            currentUser = new User(
+                    fUser.getUid(),
+                    fUser.getEmail(),
+                    fUser.getDisplayName()
+            );
+        } else {
+            Toast.makeText(this, "There is an error while loading database...", Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
+
+        String currentUserEmail = currentUser.getEmail();
         if (email.equals(currentUserEmail)) {
             Toast.makeText(this, "Không thể thêm email của chính bạn", Toast.LENGTH_SHORT).show();
             return;
         }
-
         // Kiểm tra email đã tồn tại trong danh sách contact
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         contactViewModel.getContactsForUser(currentUserId).observe(this, contacts -> {
+
+            ContactExistCallback contactExistCallback = new ContactExistCallback() {
+                @Override
+                public void onContactExist() {
+                    Toast.makeText(MainContact.this, "Liên hệ này đã tồn tại", Toast.LENGTH_SHORT).show();
+                    UserDetailActivity.flagNotAddingContact();
+                }
+
+                @Override
+                public void onContactNotExist() {
+                    UserDetailActivity.flagAddingContact();
+
+                    // Tiếp tục tìm và thêm contact
+                    userViewModel.findUserByEmail(email).observe(MainContact.this, user -> {
+                        if (user != null) {
+                            startIntentForAddingContact(email, currentUser, user, nnAdapter -> {
+                                String nickname = nnAdapter.getNickname();
+                                if ("".equals(nickname)) {
+                                    nickname = user.getDisplayName();
+                                }
+                                Contact newContact = new Contact(
+                                        currentUserId,
+                                        user.getUserId(),
+                                        nickname,
+                                        user.getAvatarUrl()
+                                );
+                                contactViewModel.addContact(newContact);
+                                Toast.makeText(MainContact.this, "Thêm liên hệ thành công", Toast.LENGTH_SHORT).show();
+                                fetchContacts();
+                            });
+                        } else {
+                            Toast.makeText(MainContact.this, "Không tìm thấy người dùng với email này",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            };
+
             if (contacts != null) {
                 for (Contact contact : contacts) {
                     // Sử dụng UserViewModel để lấy email của contact
                     userViewModel.getUserById(contact.getContactId()).observe(this, user -> {
                         if (user != null && user.getEmail().equals(email)) {
-                            Toast.makeText(this, "Liên hệ này đã tồn tại", Toast.LENGTH_SHORT).show();
-                            return;
+                            contactExistCallback.onContactExist();
                         }
                     });
                 }
             }
-            
-            // Tiếp tục tìm và thêm contact
-            userViewModel.findUserByEmail(email).observe(this, user -> {
-                if (user != null) {
-                    Contact newContact = new Contact(
-                        currentUserId,
-                        user.getUserId(),
-                        name,
-                        user.getAvatarUrl()
-                    );
-                    contactViewModel.addContact(newContact);
-                    Toast.makeText(this, "Thêm liên hệ thành công", Toast.LENGTH_SHORT).show();
-                    fetchContacts();
-                } else {
-                    Toast.makeText(this, "Không tìm thấy người dùng với email này", 
-                        Toast.LENGTH_SHORT).show();
-                }
-            });
+
+            // If onContactExist is called, this method will be end soon (and will not do anything).
+            contactExistCallback.onContactNotExist();
         });
     }
+
+    private void startIntentForAddingContact(
+            String email, User currentUser, User user,
+            ContactResultCallback callback) {
+        this.contactResultCallback = callback;
+        Intent intent = new Intent(MainContact.this, UserDetailActivity.class);
+
+        intent.putExtra("currentUser", currentUser);
+        intent.putExtra("user", user);
+
+        launcher.launch(intent);
+
+    }
+
     private void setupRecyclerView() {
         contactList = new ArrayList<>();
         adapter = new ContactAdapter(contactList, this);
@@ -210,7 +283,11 @@ public class MainContact extends AppliedThemeActivity implements
     @Override
     public void onUserClick(Contact contact) {
         Intent intent = new Intent(this, UserDetailActivity.class);
-        User user = new User(contact.getContactId(), "", contact.getDisplayName());
+        LiveData<User> liveData = userViewModel.getUserById(contact.getContactId());
+        User user = liveData.getValue();
+        if (user == null) {
+            user = new User(contact.getContactId(), "", contact.getDisplayName());
+        }
         FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
         User currentUser = null;
         if (fUser != null) {
@@ -227,6 +304,35 @@ public class MainContact extends AppliedThemeActivity implements
         intent.putExtra("currentUser", currentUser);
         intent.putExtra("user", user);
 
+        // Chi hien thi thong tin lien lac, khong hien thi gi khac.
+        UserDetailActivity.flagNotAddingContact();
+
         startActivity(intent);
+    }
+
+    public static class NickNameAdapter {
+        private String nickname;
+
+        public NickNameAdapter() {
+            this.nickname = "";
+        }
+
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
+        }
+
+        public String getNickname() {
+            return this.nickname;
+        }
+    }
+
+    public interface ContactExistCallback {
+        void onContactExist();
+
+        void onContactNotExist();
+    }
+
+    public interface ContactResultCallback {
+        void onContactResult(NickNameAdapter nnAdapter);
     }
 }

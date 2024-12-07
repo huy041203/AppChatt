@@ -70,6 +70,16 @@
                 android:layout_gravity="center"
                 android:textColor="?attr/colorOnBackground"
                 />
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="17sp"
+                android:textStyle="italic"
+                android:layout_gravity="center"
+                android:textColor="?attr/colorOnBackground"
+                />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -85,6 +95,58 @@
                     android:backgroundTint="?attr/colorPrimary"
                     android:textColor="?attr/colorOnPrimary"
                     />
+                <Button
+                    android:id="@+id/addThisContact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ADD THIS USER"
+                    android:backgroundTint="?attr/colorPrimary"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:visibility="gone"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/nickname_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+                <EditText
+                    android:id="@+id/tfNickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter a cute nickname for them here"
+                    android:layout_marginHorizontal="20dp"
+                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    >
+                    <Button
+                        android:id="@+id/btnNNCancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cancel"
+                        android:layout_marginEnd="3dp"
+                        />
+                    <Button
+                        android:id="@+id/btnNNGiveUp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Use their real name"
+                        android:layout_marginEnd="3dp"
+                        />
+                    <Button
+                        android:id="@+id/btnNNConfirm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Confirm"
+                        />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

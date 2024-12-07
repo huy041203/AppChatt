@@ -91,7 +91,10 @@ public class MessageViewModel extends ViewModel {
                     "image"
             );
             sendMessage(chatId, message);
-        });
+        })
+                .addOnFailureListener(e -> {
+                    Log.d("SendingImage", "Image upload failed " + e.getMessage(), e);
+                });
     }
 
     public void markMessageAsRead(String chatId, String messageId) {
