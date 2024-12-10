@@ -1,9 +1,37 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.AppChatt" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+<resources>
+    <declare-styleable name="CustomAttributes">
+        <attr name="colorBackground" format="color" />
+        <attr name="defaultAvatar" format="reference"/>
+        <attr name="settingAccountIcon" format="reference"/>
+        <attr name="settingThemeIcon" format="reference"/>
+        <attr name="settingLogoutIcon" format="reference"/>
+    </declare-styleable>
+
+    <!-- Light Theme -->
+    <style name="Theme.MyApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorBackground">@color/colorBackground</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="defaultAvatar">@drawable/default_profile_picture</item>
+        <item name="settingAccountIcon">@drawable/setting_account_icon_light</item>
+        <item name="settingThemeIcon">@drawable/setting_theme_icon_light</item>
+        <item name="settingLogoutIcon">@drawable/setting_logout_icon_light</item>
     </style>
 
-    <style name="Theme.AppChatt" parent="Base.Theme.AppChatt" />
+    <!-- Dark Theme -->
+    <style name="Theme.MyApp.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryDark</item>
+        <item name="colorBackground">@color/colorBackgroundDark</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="defaultAvatar">@drawable/icon_account_circle</item>
+        <item name="settingAccountIcon">@drawable/setting_account_icon_dark</item>
+        <item name="settingThemeIcon">@drawable/setting_theme_icon_dark</item>
+        <item name="settingLogoutIcon">@drawable/setting_logout_icon_dark</item>
+    </style>
 </resources>
